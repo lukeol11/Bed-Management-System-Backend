@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { Users } from './entities/users.entity';
+import { UserDto } from './dto/users.dto';
 
 @Injectable()
 export class UsersService {
@@ -10,8 +11,15 @@ export class UsersService {
         private usersRepository: Repository<Users>
     ) {}
 
-    async findAll(): Promise<Users[]> {
-        return this.usersRepository.find(); // This method retrieves all users
+    async findAll(hospitalId?: number): Promise<UserDto[]> {
+        if (hospitalId) {
+            // Assuming there's a hospitalId field in the Users entity
+            return this.usersRepository.find({
+                where: { hospital_id: hospitalId }
+            });
+        } else {
+            return this.usersRepository.find();
+        }
     }
 
     async findById(id: number): Promise<Users> {

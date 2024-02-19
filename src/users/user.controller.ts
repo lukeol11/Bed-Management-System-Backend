@@ -2,21 +2,29 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Users } from './entities/users.entity';
 import { UserDto } from './dto/users.dto';
-import { ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ApiHeader, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/users')
+@ApiTags('users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
     @Get('/all')
     @ApiResponse({
         status: 200,
-        description: 'Get all users',
+        description: 'Get all users or filter by hospital ID',
         type: UserDto,
         isArray: true
     })
-    async getAllUsers(): Promise<Users[]> {
-        return this.usersService.findAll();
+    @ApiQuery({
+        name: 'hospital_id',
+        required: false,
+        type: Number
+    })
+    async getAllUsers(
+        @Query('hospital_id') hospitalId?: number
+    ): Promise<UserDto[]> {
+        return this.usersService.findAll(hospitalId);
     }
 
     @Get('/find')
