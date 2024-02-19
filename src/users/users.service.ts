@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
-import { Users } from './entities/users.entity';
+import { User } from './entities/user.entity';
 import { UserDto } from './dto/users.dto';
 
 @Injectable()
 export class UsersService {
     constructor(
-        @InjectRepository(Users)
-        private usersRepository: Repository<Users>
+        @InjectRepository(User)
+        private usersRepository: Repository<User>
     ) {}
 
     async findAll(hospitalId?: number): Promise<UserDto[]> {
         if (hospitalId) {
-            // Assuming there's a hospitalId field in the Users entity
             return this.usersRepository.find({
                 where: { hospital_id: hospitalId }
             });
@@ -22,15 +21,15 @@ export class UsersService {
         }
     }
 
-    async findById(id: number): Promise<Users> {
-        const options: FindOneOptions<Users> = {
+    async findById(id: number): Promise<User> {
+        const options: FindOneOptions<User> = {
             where: { id: id }
         };
         return this.usersRepository.findOne(options);
     }
 
-    async findByEmail(email: string): Promise<Users> {
-        const options: FindOneOptions<Users> = {
+    async findByEmail(email: string): Promise<User> {
+        const options: FindOneOptions<User> = {
             where: { email: email }
         };
         return this.usersRepository.findOne(options);
@@ -44,8 +43,8 @@ export class UsersService {
         canApproveRequests: boolean,
         phoneNumber: string,
         createdBy: number
-    ): Promise<Users> {
-        const newUser = new Users();
+    ): Promise<User> {
+        const newUser = new User();
         newUser.hospital_id = hospitalId;
         newUser.first_name = firstName;
         newUser.last_name = lastName;
