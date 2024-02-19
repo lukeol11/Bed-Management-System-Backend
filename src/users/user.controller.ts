@@ -1,8 +1,8 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Users } from './entities/users.entity';
 import { UserDto } from './dto/users.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse } from '@nestjs/swagger';
 
 @Controller('/api/users')
 export class UsersController {
@@ -19,23 +19,34 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @Get('/findById')
+    @Get('/find')
     @ApiResponse({
         status: 200,
-        description: 'Get user by id',
+        description: 'Find user by id or email',
         type: UserDto
     })
-    async getUserById(@Param('id') id: number): Promise<Users> {
-        return this.usersService.findById(id);
-    }
-
-    @Get('/findByEmail')
-    @ApiResponse({
-        status: 200,
-        description: 'Get user by email',
-        type: UserDto
+    @ApiQuery({
+        name: 'id',
+        required: false,
+        type: Number
     })
-    async getUserByEmail(@Param('email') email: string): Promise<Users> {
-        return this.usersService.findByEmail(email);
+    @ApiQuery({
+        name: 'email',
+        required: false,
+        type: String
+    })
+    async findUser(
+        @Query('id') id?: number,
+        @Query('email') email?: string
+    ): Promise<Users> {
+        if (id) {
+            return this.usersService.findById(id);
+        } else if (email) {
+            return this.usersService.findByEmail(email);
+        } else {
+            throw new Error(
+                'You must provide either an ID or an email to find a user.'
+            );
+        }
     }
 }
