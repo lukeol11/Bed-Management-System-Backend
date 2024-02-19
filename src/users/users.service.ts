@@ -35,4 +35,29 @@ export class UsersService {
         };
         return this.usersRepository.findOne(options);
     }
+
+    async create(
+        hospitalId: number,
+        firstName: string,
+        lastName: string,
+        email: string,
+        canApproveRequests: boolean,
+        phoneNumber: string,
+        createdBy: number
+    ): Promise<Users> {
+        const newUser = new Users();
+        newUser.hospital_id = hospitalId;
+        newUser.first_name = firstName;
+        newUser.last_name = lastName;
+        newUser.email = email;
+        newUser.can_approve_requests = canApproveRequests;
+        newUser.phone_number = phoneNumber;
+        newUser.created_by = createdBy;
+        return this.usersRepository.save(newUser);
+    }
+
+    async delete(id: number): Promise<string> {
+        await this.usersRepository.delete(id);
+        return `User ${id} has been deleted`;
+    }
 }
