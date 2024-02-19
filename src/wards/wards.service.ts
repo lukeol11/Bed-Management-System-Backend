@@ -39,4 +39,9 @@ export class WardsService {
 
         return this.findWardById(id);
     }
+
+    async deleteWard(id: number): Promise<string> {
+        await this.wardsRepository.delete(id);
+        return 'Ward deleted';
+    }
 }

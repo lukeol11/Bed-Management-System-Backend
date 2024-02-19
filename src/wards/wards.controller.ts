@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Query
+} from '@nestjs/common';
 import { WardsService } from './wards.service';
 import { WardDto } from './dto/ward.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -28,7 +36,7 @@ export class WardsController {
         return this.wardsService.findAll(hospitalId);
     }
 
-    @Get('/wardById')
+    @Get('/find')
     @ApiResponse({
         status: 200,
         description: 'Get ward by ID',
@@ -54,5 +62,15 @@ export class WardsController {
         @Body() ward: UpdateWardDto
     ): Promise<WardDto> {
         return this.wardsService.updateWard(id, ward);
+    }
+
+    @Delete('/delete/:id')
+    @ApiResponse({
+        status: 200,
+        description: 'Delete ward by ID',
+        type: Ward
+    })
+    async deleteWard(@Param('id') id: number): Promise<string> {
+        return this.wardsService.deleteWard(id);
     }
 }
