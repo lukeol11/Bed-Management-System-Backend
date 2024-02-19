@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsString, IsEnum } from 'class-validator';
 
-export class WardDto {
+export class UpdateWardDto {
     @ApiProperty()
     @IsString()
     description: string;
@@ -25,8 +25,4 @@ export class WardDto {
     @ApiProperty()
     @IsEnum({ Male: 'Male', Female: 'Female', All: 'All' })
     gender: 'Male' | 'Female' | 'All';
-
-    @ApiProperty()
-    @IsInt()
-    hospital_id: number;
 }
