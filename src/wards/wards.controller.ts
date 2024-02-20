@@ -30,7 +30,7 @@ export class WardsController {
         required: false,
         type: Number
     })
-    async getAllUsers(
+    async getAllWards(
         @Query('hospital_id') hospitalId?: number
     ): Promise<WardDto[]> {
         return this.wardsService.findAll(hospitalId);

@@ -1,13 +1,13 @@
 import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
-import { UserDto } from './dto/users.dto';
+import { UserDto } from './dto/user.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/users')
 @ApiTags('users')
 export class UsersController {
-    constructor(private usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) {}
 
     @Get('/all')
     @ApiResponse({
@@ -46,7 +46,7 @@ export class UsersController {
     async findUser(
         @Query('id') id?: number,
         @Query('email') email?: string
-    ): Promise<User> {
+    ): Promise<UserDto> {
         if (id) {
             return this.usersService.findById(id);
         } else if (email) {
@@ -88,7 +88,7 @@ export class UsersController {
     @ApiResponse({
         status: 200,
         description: 'Delete a user by ID',
-        type: String
+        type: User
     })
     async deleteUser(@Param('id') id: number): Promise<string> {
         return this.usersService.delete(id);
