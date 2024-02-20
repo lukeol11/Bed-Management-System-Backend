@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
-import { UserDto } from './dto/users.dto';
+import { UserDto } from './dto/user.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/users')
@@ -46,7 +46,7 @@ export class UsersController {
     async findUser(
         @Query('id') id?: number,
         @Query('email') email?: string
-    ): Promise<User> {
+    ): Promise<UserDto> {
         if (id) {
             return this.usersService.findById(id);
         } else if (email) {
