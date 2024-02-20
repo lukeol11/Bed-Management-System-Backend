@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { WardDto } from './dto/ward.dto';
-import { Ward } from './entities/ward.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { UpdateWardDto } from './dto/updateWard.dto';
+import { Ward } from './entities/ward.entity';
+import { WardDto } from './dto/ward.dto';
 
 @Injectable()
 export class WardsService {

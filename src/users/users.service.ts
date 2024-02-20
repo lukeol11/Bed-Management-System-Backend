@@ -28,7 +28,7 @@ export class UsersService {
         return this.usersRepository.findOne(options);
     }
 
-    async findByEmail(email: string): Promise<User> {
+    async findByEmail(email: string): Promise<UserDto> {
         const options: FindOneOptions<User> = {
             where: { email: email }
         };

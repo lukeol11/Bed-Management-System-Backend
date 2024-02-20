@@ -7,7 +7,7 @@ import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 @Controller('/api/users')
 @ApiTags('users')
 export class UsersController {
-    constructor(private usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) {}
 
     @Get('/all')
     @ApiResponse({
@@ -88,7 +88,7 @@ export class UsersController {
     @ApiResponse({
         status: 200,
         description: 'Delete a user by ID',
-        type: String
+        type: User
     })
     async deleteUser(@Param('id') id: number): Promise<string> {
         return this.usersService.delete(id);
