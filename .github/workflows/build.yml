@@ -22,7 +22,7 @@ jobs:
               run: npm ci
 
             - name: Run build
-              run: npm run start:prod
+              run: npm run start:debug
 
             - name: Run unit tests
               run: npm run test
