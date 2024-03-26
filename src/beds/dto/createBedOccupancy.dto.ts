@@ -4,10 +4,6 @@ import { IsInt, IsDate } from 'class-validator';
 export class CreateBedOccupancyDto {
     @ApiProperty()
     @IsInt()
-    booking_request_id: number;
-
-    @ApiProperty()
-    @IsInt()
     patient_id: number;
 
     @ApiProperty()
@@ -21,4 +17,8 @@ export class CreateBedOccupancyDto {
     @ApiProperty()
     @IsInt()
     created_by: number;
+
+    @ApiProperty()
+    @IsDate()
+    created_at: Date;
 }

@@ -6,9 +6,6 @@ export class BedOccupancy {
     id: number;
 
     @Column()
-    booking_request_id: number;
-
-    @Column()
     patient_id: number;
 
     @Column()

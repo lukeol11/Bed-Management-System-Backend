@@ -46,6 +46,12 @@ export class BedsService {
         });
     }
 
+    async getActiveBedOccupancy(bed_id: number): Promise<BedOccupancy[]> {
+        return this.bedOccupancyRepository.find({
+            where: { bed_id, checkout_time: null }
+        });
+    }
+
     async createBedOccupancy(
         dto: CreateBedOccupancyDto
     ): Promise<BedOccupancy> {
