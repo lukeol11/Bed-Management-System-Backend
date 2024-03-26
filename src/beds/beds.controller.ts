@@ -14,6 +14,11 @@ export class BedsController {
         return this.bedsService.getBedStatus(ward_id);
     }
 
+    @Get('all/:ward_id')
+    getAllBeds(@Param('ward_id') ward_id: number) {
+        return this.bedsService.getAllBeds(ward_id);
+    }
+
     @Post('occupancy')
     createBedOccupancy(@Body() createBedOccupancyDto: CreateBedOccupancyDto) {
         return this.bedsService.createBedOccupancy(createBedOccupancyDto);

@@ -40,6 +40,12 @@ export class BedsService {
         return bedStatuses;
     }
 
+    async getAllBeds(ward_id: number): Promise<Bed[]> {
+        return this.bedsRepository.find({
+            where: { ward_id }
+        });
+    }
+
     async createBedOccupancy(
         dto: CreateBedOccupancyDto
     ): Promise<BedOccupancy> {
