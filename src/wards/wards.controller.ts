@@ -12,6 +12,7 @@ import { WardDto } from './dto/ward.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Ward } from './entities/ward.entity';
 import { UpdateWardDto } from './dto/updateWard.dto';
+import { TreatmentLevelDto } from './dto/treatmentLevel.dto';
 
 @Controller('/api/wards')
 @ApiTags('wards')
@@ -34,6 +35,17 @@ export class WardsController {
         @Query('hospital_id') hospitalId?: number
     ): Promise<WardDto[]> {
         return this.wardsService.findAll(hospitalId);
+    }
+
+    @Get('/treatment_levels')
+    @ApiResponse({
+        status: 200,
+        description: 'Get all treatment levels',
+        type: TreatmentLevelDto,
+        isArray: true
+    })
+    async getTreatmentLevels(): Promise<TreatmentLevelDto[]> {
+        return this.wardsService.getTreatmentLevels();
     }
 
     @Get('/find')
@@ -74,3 +86,4 @@ export class WardsController {
         return this.wardsService.deleteWard(id);
     }
 }
+

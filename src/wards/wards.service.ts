@@ -3,13 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { UpdateWardDto } from './dto/updateWard.dto';
 import { Ward } from './entities/ward.entity';
+import { TreatmentLevel } from './entities/treatment-level.entity';
 import { WardDto } from './dto/ward.dto';
+import { TreatmentLevelDto } from './dto/treatmentLevel.dto';
 
 @Injectable()
 export class WardsService {
     constructor(
         @InjectRepository(Ward)
-        private wardsRepository: Repository<Ward>
+        private wardsRepository: Repository<Ward>,
+        @InjectRepository(TreatmentLevel)
+        private treatmentLevelsRepository: Repository<TreatmentLevel>
     ) {}
 
     async findAll(hospitalId?: number): Promise<WardDto[]> {
@@ -21,6 +25,13 @@ export class WardsService {
             return this.wardsRepository.find();
         }
     }
+
+    async getTreatmentLevels(): Promise<TreatmentLevelDto[]> {
+        return this.treatmentLevelsRepository.find({
+            select: ['name', 'description', 'equipment']
+        });
+    }
+
     async findWardById(id: number): Promise<WardDto> {
         const options: FindOneOptions<Ward> = {
             where: { id: id }
@@ -45,3 +56,4 @@ export class WardsService {
         return 'Ward deleted';
     }
 }
+
