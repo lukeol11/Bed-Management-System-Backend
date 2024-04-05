@@ -46,6 +46,11 @@ export class BedsService {
         });
     }
 
+    async deleteBedById(bed_id: number): Promise<string> {
+        await this.bedsRepository.delete(bed_id);
+        return 'Bed deleted successfully';
+    }
+
     async getAllBeds(ward_id: number): Promise<Bed[]> {
         return this.bedsRepository.find({
             where: { ward_id }

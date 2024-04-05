@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Query
+} from '@nestjs/common';
 import { BedsService } from './beds.service';
 import { CreateBedOccupancyDto } from './dto/createBedOccupancy.dto';
 import { CheckoutBedOccupancyDto } from './dto/checkoutBedOccupancy.dto';
@@ -27,6 +35,11 @@ export class BedsController {
     @Get('find/:bed_id')
     getBedById(@Param('bed_id') bed_id: number) {
         return this.bedsService.getBedById(bed_id);
+    }
+
+    @Delete('delete/:bed_id')
+    deleteBedById(@Param('bed_id') bed_id: number) {
+        return this.bedsService.deleteBedById(bed_id);
     }
 
     @Post('occupancy')
