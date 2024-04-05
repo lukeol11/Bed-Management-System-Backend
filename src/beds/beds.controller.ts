@@ -10,7 +10,8 @@ import {
 import { BedsService } from './beds.service';
 import { CreateBedOccupancyDto } from './dto/createBedOccupancy.dto';
 import { CheckoutBedOccupancyDto } from './dto/checkoutBedOccupancy.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { BedDto } from './dto/Bed.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('api/beds')
 @ApiTags('beds')
@@ -45,6 +46,16 @@ export class BedsController {
     @Post('occupancy')
     createBedOccupancy(@Body() createBedOccupancyDto: CreateBedOccupancyDto) {
         return this.bedsService.createBedOccupancy(createBedOccupancyDto);
+    }
+
+    @Post('create')
+    @ApiResponse({
+        status: 201,
+        description: 'Create a new bed',
+        type: BedDto
+    })
+    createBed(@Body() bed: BedDto): Promise<BedDto> {
+        return this.bedsService.createBed(bed);
     }
 
     @Post('checkout')

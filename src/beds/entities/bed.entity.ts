@@ -22,7 +22,4 @@ export class Bed {
 
     @Column({ nullable: true })
     disabled_reason_id: number;
-
-    @Column()
-    treatment_level_id: number;
 }

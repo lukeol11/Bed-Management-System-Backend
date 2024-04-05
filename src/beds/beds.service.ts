@@ -5,6 +5,7 @@ import { Bed } from './entities/bed.entity';
 import { BedOccupancy } from './entities/bedOccupancy.entity';
 import { CreateBedOccupancyDto } from './dto/createBedOccupancy.dto';
 import { CheckoutBedOccupancyDto } from './dto/checkoutBedOccupancy.dto';
+import { BedDto } from './dto/Bed.dto';
 
 @Injectable()
 export class BedsService {
@@ -38,6 +39,10 @@ export class BedsService {
         );
 
         return bedStatuses;
+    }
+
+    async createBed(bed: BedDto): Promise<BedDto> {
+        return this.bedsRepository.save(bed);
     }
 
     async getBedById(bed_id: number): Promise<Bed> {
