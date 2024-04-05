@@ -28,7 +28,7 @@ export class WardsService {
 
     async getTreatmentLevels(): Promise<TreatmentLevelDto[]> {
         return this.treatmentLevelsRepository.find({
-            select: ['name', 'description', 'equipment']
+            select: ['id', 'name', 'description', 'equipment']
         });
     }
 
