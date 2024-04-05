@@ -18,6 +18,10 @@ describe('WardsController', () => {
                 {
                     provide: getRepositoryToken(Ward),
                     useValue: {}
+                },
+                {
+                    provide: getRepositoryToken(TreatmentLevel),
+                    useValue: {}
                 }
             ]
         }).compile();

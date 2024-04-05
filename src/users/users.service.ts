@@ -35,24 +35,8 @@ export class UsersService {
         return this.usersRepository.findOne(options);
     }
 
-    async create(
-        hospitalId: number,
-        firstName: string,
-        lastName: string,
-        email: string,
-        canApproveRequests: boolean,
-        phoneNumber: string,
-        createdBy: number
-    ): Promise<User> {
-        const newUser = new User();
-        newUser.hospital_id = hospitalId;
-        newUser.first_name = firstName;
-        newUser.last_name = lastName;
-        newUser.email = email;
-        newUser.can_approve_requests = canApproveRequests;
-        newUser.phone_number = phoneNumber;
-        newUser.created_by = createdBy;
-        return this.usersRepository.save(newUser);
+    async createUser(user: UserDto): Promise<UserDto> {
+        return this.usersRepository.save(user);
     }
 
     async delete(id: number): Promise<string> {
@@ -60,3 +44,4 @@ export class UsersService {
         return `User ${id} has been deleted`;
     }
 }
+

@@ -14,4 +14,3 @@ export class HospitalDto {
     @IsString()
     location: string;
 }
-

@@ -16,6 +16,9 @@ export class User {
     can_approve_requests: boolean;
 
     @Column()
+    can_administrate: boolean;
+
+    @Column()
     hospital_id: number;
 
     @Column()
@@ -30,3 +33,4 @@ export class User {
     @Column()
     created_by: number;
 }
+

@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Query
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UserDto } from './dto/user.dto';
@@ -64,24 +72,8 @@ export class UsersController {
         description: 'Create a new user',
         type: UserDto
     })
-    async createUser(
-        @Query('first_name') firstName: string,
-        @Query('last_name') lastName: string,
-        @Query('email') email: string,
-        @Query('hospital_id') hospitalId: number,
-        @Query('can_approve_requests') canApproveRequests: boolean,
-        @Query('phone_number') phoneNumber?: string,
-        @Query('created_by') createdBy?: number
-    ): Promise<UserDto> {
-        return this.usersService.create(
-            hospitalId,
-            firstName,
-            lastName,
-            email,
-            canApproveRequests,
-            phoneNumber,
-            createdBy
-        );
+    async createWard(@Body() user: UserDto): Promise<UserDto> {
+        return this.usersService.createUser(user);
     }
 
     @Delete('/delete/:id')
@@ -94,3 +86,4 @@ export class UsersController {
         return this.usersService.delete(id);
     }
 }
+
