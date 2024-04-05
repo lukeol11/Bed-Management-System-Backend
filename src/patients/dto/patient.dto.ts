@@ -3,10 +3,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class PatientDto {
     @ApiProperty()
-    @IsNumber()
-    id: number;
-
-    @ApiProperty()
     @IsString()
     first_name: string;
 
@@ -34,3 +30,4 @@ export class PatientDto {
     @IsNumber()
     treatment_level_id: number;
 }
+
