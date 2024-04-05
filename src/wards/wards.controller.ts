@@ -5,6 +5,7 @@ import {
     Get,
     Param,
     Patch,
+    Post,
     Query
 } from '@nestjs/common';
 import { WardsService } from './wards.service';
@@ -46,6 +47,16 @@ export class WardsController {
     })
     async getTreatmentLevels(): Promise<TreatmentLevelDto[]> {
         return this.wardsService.getTreatmentLevels();
+    }
+
+    @Post('/create')
+    @ApiResponse({
+        status: 201,
+        description: 'Create a new ward',
+        type: WardDto
+    })
+    async createWard(@Body() ward: WardDto): Promise<WardDto> {
+        return this.wardsService.createWard(ward);
     }
 
     @Get('/find')

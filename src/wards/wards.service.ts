@@ -32,6 +32,10 @@ export class WardsService {
         });
     }
 
+    async createWard(ward: WardDto): Promise<WardDto> {
+        return this.wardsRepository.save(ward);
+    }
+
     async findWardById(id: number): Promise<WardDto> {
         const options: FindOneOptions<Ward> = {
             where: { id: id }
