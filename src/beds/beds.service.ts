@@ -23,12 +23,11 @@ export class BedsService {
 
         const bedStatuses = await Promise.all(
             beds.map(async (bed) => {
-                const occupancy = await this.bedOccupancyRepository.findOne({
-                    where: {
-                        bed_id: bed.id,
-                        checkout_time: null
-                    }
-                });
+                const occupancy = await this.bedOccupancyRepository
+                    .createQueryBuilder('occupancy')
+                    .where('occupancy.bed_id = :bed_id', { bed_id: bed.id })
+                    .andWhere('occupancy.checkout_time IS NULL')
+                    .getOne();
 
                 return {
                     id: bed.id,
@@ -63,9 +62,11 @@ export class BedsService {
     }
 
     async getActiveBedOccupancy(bed_id: number): Promise<BedOccupancy[]> {
-        return this.bedOccupancyRepository.find({
-            where: { bed_id, checkout_time: null }
-        });
+        return this.bedOccupancyRepository
+            .createQueryBuilder('occupancy')
+            .where('occupancy.bed_id = :bed_id', { bed_id })
+            .andWhere('occupancy.checkout_time IS NULL')
+            .getMany();
     }
 
     async createBedOccupancy(
