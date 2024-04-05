@@ -20,7 +20,7 @@ export class PatientsService {
         return 'Patient deleted';
     }
 
-    async updatePatient(id: number, patient: Patient): Promise<PatientDto> {
+    async updatePatient(id: number, patient: PatientDto): Promise<PatientDto> {
         const currentPatient = await this.findPatientById(id);
         if (!currentPatient) {
             throw new Error('Patient not found');
@@ -38,7 +38,8 @@ export class PatientsService {
         return this.patientsRepository.findOne(options);
     }
 
-    async createPatient(patient: Patient): Promise<PatientDto> {
+    async createPatient(patient: PatientDto): Promise<Patient> {
         return this.patientsRepository.save(patient);
     }
 }
+

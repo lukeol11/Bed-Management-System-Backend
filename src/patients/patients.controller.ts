@@ -68,7 +68,8 @@ export class PatientsController {
         description: 'Create a new patient',
         type: PatientDto
     })
-    async createPatient(@Body() patient: PatientDto): Promise<PatientDto> {
+    async createPatient(@Body() patient: PatientDto): Promise<Patient> {
         return this.patientsService.createPatient(patient);
     }
 }
+
