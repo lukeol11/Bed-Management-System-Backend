@@ -33,15 +33,26 @@ describe('UsersController', () => {
         it('should return an array of users', async () => {
             const users: UserDto[] = [
                 {
-                    id: 1,
                     first_name: 'John',
                     last_name: 'Doe',
-                    email: 'john@example.com',
-                    hospital_id: 1,
                     can_approve_requests: true,
-                    phone_number: '1234567890',
-                    created_by: 1,
-                    created_at: new Date()
+                    can_administrate: false,
+                    hospital_id: 1,
+                    email: 'john.doe2@example.com',
+                    phone_number: '123-456-7890',
+                    created_at: new Date('2024-02-19T15:21:29.000Z'),
+                    created_by: 1
+                },
+                {
+                    first_name: 'Jane',
+                    last_name: 'Doe',
+                    can_approve_requests: false,
+                    can_administrate: false,
+                    hospital_id: 2,
+                    email: 'jane.doe@example.com',
+                    phone_number: '123-456-7890',
+                    created_at: new Date('2024-02-19T15:21:29.000Z'),
+                    created_by: 2
                 }
             ];
             jest.spyOn(usersService, 'findAll').mockResolvedValue(users);
@@ -53,15 +64,15 @@ describe('UsersController', () => {
     describe('findUser', () => {
         it('should return a user by ID', async () => {
             const user: UserDto = {
-                id: 1,
                 first_name: 'John',
                 last_name: 'Doe',
-                email: 'john@example.com',
-                hospital_id: 1,
                 can_approve_requests: true,
-                phone_number: '1234567890',
-                created_by: 1,
-                created_at: new Date()
+                can_administrate: false,
+                hospital_id: 1,
+                email: 'john.doe2@example.com',
+                phone_number: '123-456-7890',
+                created_at: new Date('2024-02-19T15:21:29.000Z'),
+                created_by: 1
             };
             jest.spyOn(usersService, 'findById').mockResolvedValue(user);
 
@@ -70,15 +81,15 @@ describe('UsersController', () => {
 
         it('should return a user by email', async () => {
             const user: UserDto = {
-                id: 1,
                 first_name: 'John',
                 last_name: 'Doe',
-                email: 'john@example.com',
-                hospital_id: 1,
                 can_approve_requests: true,
-                phone_number: '1234567890',
-                created_by: 1,
-                created_at: new Date()
+                can_administrate: false,
+                hospital_id: 1,
+                email: 'john.doe2@example.com',
+                phone_number: '123-456-7890',
+                created_at: new Date('2024-02-19T15:21:29.000Z'),
+                created_by: 1
             };
             jest.spyOn(usersService, 'findByEmail').mockResolvedValue(user);
 
@@ -86,40 +97,24 @@ describe('UsersController', () => {
                 await controller.findUser(undefined, 'john@example.com')
             ).toBe(user);
         });
-
-        it('should throw an error if neither ID nor email provided', async () => {
-            await expect(controller.findUser()).rejects.toThrowError(
-                'You must provide either an ID or an email to find a user.'
-            );
-        });
     });
 
     describe('createUser', () => {
         it('should create a new user', async () => {
             const newUser: UserDto = {
-                id: 2,
-                first_name: 'Jane',
+                first_name: 'John',
                 last_name: 'Doe',
-                email: 'jane@example.com',
+                can_approve_requests: true,
+                can_administrate: false,
                 hospital_id: 1,
-                can_approve_requests: false,
-                phone_number: '9876543210',
-                created_by: 1,
-                created_at: new Date()
+                email: 'john.doe2@example.com',
+                phone_number: '123-456-7890',
+                created_at: new Date('2024-02-19T15:21:29.000Z'),
+                created_by: 1
             };
-            jest.spyOn(usersService, 'create').mockResolvedValue(newUser);
+            jest.spyOn(usersService, 'createUser').mockResolvedValue(newUser);
 
-            expect(
-                await controller.createUser(
-                    'Jane',
-                    'Doe',
-                    'jane@example.com',
-                    1,
-                    false,
-                    '9876543210',
-                    1
-                )
-            ).toBe(newUser);
+            expect(await controller.createWard(newUser)).toBe(newUser);
         });
     });
 

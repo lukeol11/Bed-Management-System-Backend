@@ -3,6 +3,7 @@ import { WardsService } from '../../src/wards/wards.service';
 import { Ward } from '../../src/wards/entities/ward.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { TreatmentLevel } from '../../src/wards/entities/treatment-level.entity';
 
 describe('WardsService', () => {
     let service: WardsService;
@@ -15,6 +16,10 @@ describe('WardsService', () => {
                 {
                     provide: getRepositoryToken(Ward),
                     useClass: Repository
+                },
+                {
+                    provide: getRepositoryToken(TreatmentLevel),
+                    useValue: {}
                 }
             ]
         }).compile();
