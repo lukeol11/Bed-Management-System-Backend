@@ -9,10 +9,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
     @ApiProperty()
-    @IsNumber()
-    id: number;
-
-    @ApiProperty()
     @IsString()
     first_name: string;
 
@@ -23,6 +19,10 @@ export class UserDto {
     @ApiProperty()
     @IsBoolean()
     can_approve_requests: boolean;
+
+    @ApiProperty()
+    @IsBoolean()
+    can_administrate: boolean;
 
     @ApiProperty()
     @IsNumber()
@@ -44,3 +44,4 @@ export class UserDto {
     @IsNumber()
     created_by: number;
 }
+
