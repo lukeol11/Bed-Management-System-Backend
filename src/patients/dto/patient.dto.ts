@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsNumber, IsDate } from 'class-validator';
+import { IsString, IsBoolean, IsNumber, IsDate, IsEnum } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class PatientDto {
@@ -27,7 +27,10 @@ export class PatientDto {
     created_at: Date;
 
     @ApiProperty()
+    @IsEnum({ Male: 'Male', Female: 'Female', Other: 'Other' })
+    gender: 'Male' | 'Female' | 'Other';
+
+    @ApiProperty()
     @IsNumber()
     treatment_level_id: number;
 }
-
