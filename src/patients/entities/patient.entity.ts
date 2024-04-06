@@ -25,9 +25,16 @@ export class Patient {
     @Column()
     created_by: number;
 
+    @Column({
+        type: 'enum',
+        enum: ['Male', 'Female', 'Other']
+    })
+    gender: 'Male' | 'Female' | 'Other';
+
     @CreateDateColumn()
     created_at: Date;
 
     @Column()
     treatment_level_id: number;
 }
+

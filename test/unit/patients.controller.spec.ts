@@ -37,6 +37,7 @@ describe('PatientsController', () => {
                     last_name: 'Doe',
                     date_of_birth: '1990-01-01',
                     in_transit: false,
+                    gender: 'Male',
                     created_by: 1,
                     created_at: new Date(),
                     treatment_level_id: 1
@@ -56,6 +57,7 @@ describe('PatientsController', () => {
                 last_name: 'Doe',
                 date_of_birth: '1990-01-01',
                 in_transit: false,
+                gender: 'Male',
                 created_by: 1,
                 created_at: new Date(),
                 treatment_level_id: 1
@@ -86,6 +88,7 @@ describe('PatientsController', () => {
                 last_name: 'Doe',
                 date_of_birth: '1990-01-01',
                 in_transit: false,
+                gender: 'Male',
                 created_by: 1,
                 created_at: new Date(),
                 treatment_level_id: 2
@@ -108,6 +111,7 @@ describe('PatientsController', () => {
                 last_name: 'Doe',
                 date_of_birth: '1995-01-01',
                 in_transit: false,
+                gender: 'Male',
                 created_by: 1,
                 created_at: new Date(),
                 treatment_level_id: 1
