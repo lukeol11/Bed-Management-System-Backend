@@ -4,6 +4,7 @@ import {
     Delete,
     Get,
     Param,
+    Patch,
     Post,
     Query
 } from '@nestjs/common';
@@ -46,6 +47,16 @@ export class BedsController {
     @Post('occupancy')
     createBedOccupancy(@Body() createBedOccupancyDto: CreateBedOccupancyDto) {
         return this.bedsService.createBedOccupancy(createBedOccupancyDto);
+    }
+
+    @Patch('disable/:bed_id')
+    disableBed(@Param('bed_id') bed_id: number) {
+        return this.bedsService.disableBed(bed_id);
+    }
+
+    @Patch('enable/:bed_id')
+    enableBed(@Param('bed_id') bed_id: number) {
+        return this.bedsService.enableBed(bed_id);
     }
 
     @Post('create')
