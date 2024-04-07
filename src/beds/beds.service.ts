@@ -40,6 +40,16 @@ export class BedsService {
         return bedStatuses;
     }
 
+    async disableBed(bed_id: number): Promise<string> {
+        await this.bedsRepository.update(bed_id, { disabled: true });
+        return 'Bed disabled successfully';
+    }
+
+    async enableBed(bed_id: number): Promise<string> {
+        await this.bedsRepository.update(bed_id, { disabled: false });
+        return 'Bed enabled successfully';
+    }
+
     async createBed(bed: BedDto): Promise<BedDto> {
         return this.bedsRepository.save(bed);
     }
