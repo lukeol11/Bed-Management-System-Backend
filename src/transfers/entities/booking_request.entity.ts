@@ -23,6 +23,9 @@ export class BookingRequest {
     @Column({ name: 'approved_by', nullable: true })
     approvedBy: number;
 
+    @Column({ name: 'current_bed' })
+    currentBed: number;
+
     @Column({ name: 'bed_requested' })
     bedRequested: number;
 
