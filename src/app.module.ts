@@ -6,6 +6,7 @@ import { WardsModule } from './wards/wards.module';
 import { PatientsModule } from './patients/patients.module';
 import { HospitalsModule } from './hospitals/hospitals.module';
 import { BedsModule } from './beds/beds.module';
+import { TransfersModule } from './transfers/transfers.module';
 
 @Module({
     imports: [
@@ -13,7 +14,8 @@ import { BedsModule } from './beds/beds.module';
         WardsModule,
         PatientsModule,
         HospitalsModule,
-        BedsModule
+        BedsModule,
+        TransfersModule
     ],
     controllers: [AppController],
     providers: [AppService]
