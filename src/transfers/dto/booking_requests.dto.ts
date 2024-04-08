@@ -17,4 +17,8 @@ export class BookingRequestDto {
     @ApiProperty()
     @IsNumber()
     hospitalId: number;
+
+    @ApiProperty()
+    @IsNumber()
+    patientId: number;
 }

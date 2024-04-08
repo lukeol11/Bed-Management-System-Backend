@@ -28,4 +28,7 @@ export class BookingRequest {
 
     @Column({ name: 'hospital_id' })
     hospitalId: number;
+
+    @Column({ name: 'patient_id' })
+    patientId: number;
 }
