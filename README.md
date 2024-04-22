@@ -10,34 +10,70 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 
+## Contributors
+
+Developed by Luke O'Leary as part of their final year project at the University of Limerick titled "_A Web-Based Approach to Hospital Bed Management_"
+
 ## Installation
 
 ```bash
-$ npm install
+nvm use
+```
+
+```bash
+npm install
 ```
 
 ## Running the app
 
+### Database Configuration
+
+The following MySQL database configuration is required to run the application:
+[Database Configuration](database/schema.sql)
+
+Create a .env file in the main directory with the database configuration.
+
+**Sample Configuation:**
+
+```bash
+DB_HOST = ""
+DB_PORT = 0000
+DB_USERNAME = ""
+DB_PASSWORD = ""
+DB_NAME = ""
+DB_SYNCHRONIZE = ""
+```
+
+### Nest Configuration
+
 ```bash
 # development
-$ npm run start
+npm run start
 
 # watch mode
-$ npm run start:dev
+npm run start:dev
 
 # production mode
-$ npm run start:prod
+npm run start:prod
 ```
+
+### Swagger
+
+A swagger UI is available on at `/api` after starting the application.
+
+### Frontend
+
+The Vue.js frontend for this project can be found [here](https://github.com/lukeol11/Bed-Management-System-Frontend)
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
