@@ -10,6 +10,10 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 
+## Contributors
+
+Developed by Luke O'Leary as part of their final year project at the University of Limerick titled "_A Web-Based Approach to Hospital Bed Management_"
+
 ## Installation
 
 ```bash
