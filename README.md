@@ -1,10 +1,10 @@
 # Bed Management System Backend
 
 [![build](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/build.yml/badge.svg)](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/build.yml)
-[![GitHub license](https://img.shields.io/github/license/lukeol11/Bed-Management-System-Backend?color=blue)](https://github.com/lukeol11/Bed-Management-System-Backend/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/lukeol11/Bed-Management-System-Backend)](https://github.com/lukeol11/Bed-Management-System-Backend/issues)
-![GitHub Created At](https://img.shields.io/github/created-at/lukeol11/Bed-Management-System-Backend)
-![GitHub last commit](https://img.shields.io/github/last-commit/lukeol11/Bed-Management-System-Backend)
+![GitHub Created At](https://img.shields.io/github/created-at/lukeol11/Bed-Management-System-Backend?logo=github)
+![GitHub last commit](https://img.shields.io/github/last-commit/lukeol11/Bed-Management-System-Backend?logo=github)
+[![GitHub license](https://img.shields.io/github/license/lukeol11/Bed-Management-System-Backend?color=blue&logo=github)](https://github.com/lukeol11/Bed-Management-System-Backend/blob/master/LICENSE)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=bugs)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
