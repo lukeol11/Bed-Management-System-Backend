@@ -25,6 +25,21 @@
 [![SonarCloud](https://img.shields.io/badge/Sonar%20cloud-F3702A?style=for-the-badge&logo=sonarcloud&logoColor=white)](https://www.sonarsource.com/products/sonarcloud/)
 [![Prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)](https://prettier.io/)
 
+## Table of Contents
+
+- [Description](#description)
+- [Installation](#installation)
+- [Running the app](#running-the-app)
+  - [Database Configuration](#database-configuration)
+  - [Nest Configuration](#nest-configuration)
+  - [Swagger](#swagger)
+  - [Frontend](#frontend)
+- [Test](#test)
+- [Contributors](#contributors)
+- [License](#license)
+
+## Description
+
 ## Installation
 
 ```bash
