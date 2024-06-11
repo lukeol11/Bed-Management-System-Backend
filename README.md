@@ -70,7 +70,7 @@ npm run start:prod
 
 ### Swagger
 
-A swagger UI is available on at `/api` after starting the application.
+A swagger UI is available at `/api` after starting the application.
 
 ### Frontend
 
