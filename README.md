@@ -42,7 +42,7 @@ npm install
 The following MySQL database configuration is required to run the application:
 [Database Configuration](database/schema.sql)
 
-Create a .env file in the main directory with the database configuration.
+Create a `.env` file in the main directory with the database configuration.
 
 **Sample Configuation:**
 
