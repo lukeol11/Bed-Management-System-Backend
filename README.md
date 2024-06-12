@@ -32,6 +32,34 @@
 
 This software, aims to address the critical challenge of optimising hospital resource management, focusing on the effective allocation and utilisation on hospital beds.
 
+There are many roles involved with efficent bed management including
+
+- Doctors
+- Nurses
+- Bed Manages
+- IT Administrators
+- Cleaners
+
+this results in bed management systems having may feature requirements including
+
+- Bed Assignment
+- Patient Transfers
+- Bed Status Tracking
+- Real-time Dashboard
+- Updatable Wards & Beds
+- Cross-platform Compatibility
+- User-friendly Design
+
+The motivation for this project comes from the hospital bed shortage faced in Ireland. The increasing wait times have resulted in more patients on trolleys; making them susceptible to infection and potential poor outcome. Efficient bed management can potentially help reduce waiting times by speeding up the bed allocation process.
+
+Through careful research of existing literature and practices, some key design choices and features were made. For example, to eliminate the potential of typos, QR codes can be used to access all information and actions for a specific bed.
+
+The System aims to meet the complex requirements of hospital bed management using a web application. Automating the bed management process can have huge impacts resulting in
+
+- Saving staff time
+- Improved patient care
+- Cost savings through optimisation
+
 ### Technology Stack
 
 [![Nest.js](https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
