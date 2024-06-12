@@ -70,16 +70,17 @@ DB_NAME = ""
 DB_SYNCHRONIZE = ""
 ```
 
-### Nest Configuration
+### Run development build
 
 ```bash
-# development
+# Database needs to be running before starting the application
 npm run start
+```
 
-# watch mode
-npm run start:dev
+### Run production build
 
-# production mode
+```bash
+# Database needs to be running before starting the application
 npm run start:prod
 ```
 
