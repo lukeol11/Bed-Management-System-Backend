@@ -189,6 +189,13 @@ DB_SYNCHRONIZE = ""
 npm run start
 ```
 
+### Run production build
+
+```bash
+# Database needs to be running before starting the application
+npm run start:prod
+```
+
 ### Information for contributors
 
 #### Code Formatter
@@ -202,13 +209,6 @@ For the style guide we use [Airbnb JavaScript Style Guide](https://github.com/ai
 #### Code Analysis
 
 For code analysis we use [SonarCloud](https://sonarcloud.io/). Please ensure that your code does not have any bugs, vulnerabilities, code smells, or security issues. This analysis will automatically run on every pull request. A failed analysis will prevent the pull request from being merged with the main branch.
-
-### Run production build
-
-```bash
-# Database needs to be running before starting the application
-npm run start:prod
-```
 
 ### Swagger
 
