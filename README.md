@@ -32,7 +32,7 @@
 
 This software, aims to address the critical challenge of optimising hospital resource management, focusing on the effective allocation and utilisation on hospital beds.
 
-There are many roles involved with efficent bed management including
+There are many roles involved with efficient bed management including
 
 - Doctors
 - Nurses
