@@ -1,4 +1,4 @@
-# Bed Management System Backend
+# [Bed Management System Backend](https://github.com/lukeol11/Bed-Management-System-Backend)
 
 [![build](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/build.yml/badge.svg)](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/build.yml)
 [![GitHub issues](https://img.shields.io/github/issues/lukeol11/Bed-Management-System-Backend)](https://github.com/lukeol11/Bed-Management-System-Backend/issues)
@@ -15,6 +15,28 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 
+## Table of Contents
+
+- [Description](#description)
+  - [Technology Stack](#technology-stack)
+  - [Features](#features)
+- [Installation](#installation)
+- [Running the app](#running-the-app)
+  - [Database Configuration](#database-configuration)
+  - [Run development build](#run-development-build)
+  - [Run production build](#run-production-build)
+  - [Swagger](#swagger)
+  - [Frontend](#frontend)
+- [Test](#test)
+- [Contributors](#contributors)
+- [License](#license)
+
+## Description
+
+This software, aims to address the critical challenge of optimising hospital resource management, focusing on the effective allocation and utilisation on hospital beds.
+
+### Technology Stack
+
 [![Nest.js](https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
 [![NPM](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/)
 [![Node.js](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en)
@@ -25,20 +47,85 @@
 [![SonarCloud](https://img.shields.io/badge/Sonar%20cloud-F3702A?style=for-the-badge&logo=sonarcloud&logoColor=white)](https://www.sonarsource.com/products/sonarcloud/)
 [![Prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)](https://prettier.io/)
 
-## Table of Contents
+### Features
 
-- [Description](#description)
-- [Installation](#installation)
-- [Running the app](#running-the-app)
-  - [Database Configuration](#database-configuration)
-  - [Nest Configuration](#nest-configuration)
-  - [Swagger](#swagger)
-  - [Frontend](#frontend)
-- [Test](#test)
-- [Contributors](#contributors)
-- [License](#license)
+- [Real-time dashboard](#real-time-dashboard)
+- [Bed assignment](#bed-assignment)
+- [Bed status tracking](#bed-status-tracking)
+- [Patient transfers](#patient-transfers)
+- [User management](#user-management)
+- [Ward & bed management](#ward--bed-management)
+- [QR code navigation](#qr-code-navigation)
+- [Bed cleaning management](#bed-cleaning-management)
+- [Unique user roles](#unique-user-roles)
+- [Firebase authentication](#firebase-authentication)
 
-## Description
+#### Real-time dashboard
+
+![Dashboard](/docs/images/Dashboard.png)
+
+The dashboard provides a real-time overview of the hospital's bed occupancy and navigation to the different features of the system.
+
+#### Bed assignment
+
+![Bed Assignment](/docs/images/Bed%20Assignment.png)
+
+The bed assignment feature allows doctors and nurses to assign a patient to a bed by inputting their details which shows all available beds that meet the patients requirements (Gender & Age).
+
+#### Bed Status Tracking
+
+![Bed Status](/docs/images/Bed%20Status.png)
+
+The bed status page seen in the above figure shows the status of a given bed and the patient information if occupied. The bed status is updated in real-time.
+
+#### Patient Transfers
+
+![Patient Transfer](/docs/images/Patient%20Transfer.png)
+
+The patient transfer screen allows users to request a transfer for a patient to another bed in the same or different hospital. The request can then only be approved by the bed manager where the patient is being transferred to.
+
+#### User Management
+
+![Manage Users](/docs/images/Manage%20Users.png)
+
+The user management page allows administrators to create and delete user accounts. The page also allows administrators to assign roles to users. After entering the details of a new users, a pop-up will appear to enter a password for the new user.
+
+#### Ward & Bed Management
+
+![Manage Wards & Beds](/docs/images/Manage%20Beds.png)
+
+The ward and bed management page allows administrators to create and delete wards and beds.
+
+#### QR code navigation
+
+![QR Code](/docs/images/QR%20code.png)
+
+QR codes similar to the one above are generated for every bed in the hospital. These QR codes can be scanned to navigate to the bed status page for that bed.
+
+#### Bed Cleaning Management
+
+![Cleaning Required Tag](/docs/images/Cleaning%20Required%20Tag.png)
+
+![Mark as Cleaned button](/docs/images/Mark%20as%20cleaned%20button.png)
+
+When a patient is discharged from a bed, the bed is marked as requiring cleaning. Once cleaned the bed can then be marked as available for a new patient.
+
+#### Unique User Roles
+
+| Features                         | Doctors & Nurses | Bed Managers | Administrators |
+| -------------------------------- | ---------------- | ------------ | -------------- |
+| Assign/Unassign Patients to Beds | ✔️               | ✔️           | ✔️             |
+| Search for Patients              | ✔️               | ✔️           | ✔️             |
+| Make Transfer Requests           | ✔️               | ✔️           | ✔️             |
+| Approve Transfer Requests        | ❌               | ✔️           | ❌             |
+| Create/Update User Accounts      | ❌               | ❌           | ✔️             |
+| Create/Update Wards & Beds       | ❌               | ❌           | ✔️             |
+
+#### Firebase Authentication
+
+![Login Form](/docs/images/Login%20Component.png)
+
+Firebase Authentication is used to authenticate users. The system has three user roles: Doctors & Nurses, Bed Managers, and Administrators. Each user role has different permissions.
 
 ## Installation
 
