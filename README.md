@@ -22,11 +22,6 @@
   - [Features](#features)
 - [Installation](#installation)
 - [Running the app](#running-the-app)
-  - [Database Configuration](#database-configuration)
-  - [Run development build](#run-development-build)
-  - [Run production build](#run-production-build)
-  - [Swagger](#swagger)
-  - [Frontend](#frontend)
 - [Endpoints](#endpoints)
 - [Test](#test)
 - [Contributors](#contributors)
@@ -164,6 +159,20 @@ DB_SYNCHRONIZE = ""
 # Database needs to be running before starting the application
 npm run start
 ```
+
+### Information for contributors
+
+#### Code Formatter
+
+For code formatting we use [Prettier](https://prettier.io/). Please use this to format your code so that the codebase remains consistent.
+
+#### Style Guide
+
+For the style guide we use [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript/blob/master/README.md). Please follow this guide when writing code.
+
+#### Code Analysis
+
+For code analysis we use [SonarCloud](https://sonarcloud.io/). Please ensure that your code does not have any bugs, vulnerabilities, code smells, or security issues. This analysis will automatically run on every pull request. A failed analysis will prevent the pull request from being merged with the main branch.
 
 ### Run production build
 
