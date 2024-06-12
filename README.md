@@ -210,6 +210,30 @@ For the style guide we use [Airbnb JavaScript Style Guide](https://github.com/ai
 
 For code analysis we use [SonarCloud](https://sonarcloud.io/). Please ensure that your code does not have any bugs, vulnerabilities, code smells, or security issues. This analysis will automatically run on every pull request. A failed analysis will prevent the pull request from being merged with the main branch.
 
+#### Commit Messages & Branch Naming
+
+Commit messages should be in the following format:
+
+```
+<type>: <description>
+```
+
+Branch names should be in the following format:
+
+```
+<type>/<description>
+```
+
+Where `<type>` is one of the following:
+
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `test`: Adding or updating tests
+- `chore`: Changes to the build process or auxiliary tools and libraries such as documentation generation
+
 ### Swagger
 
 A swagger UI is available at `/api` after starting the application.
