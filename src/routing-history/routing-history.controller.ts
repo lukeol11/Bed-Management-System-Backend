@@ -23,7 +23,7 @@ export class RoutingHistoryController {
         return this.routingHistoryService.addRoutingHistory(routingHistory);
     }
 
-    @Get('/routing-history')
+    @Get('/find')
     @ApiResponse({
         status: 200,
         description: 'Get routing history',
