@@ -1,6 +1,8 @@
 # [Bed Management System Backend](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend)
 
 [![build](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/actions/workflows/build.yml/badge.svg)](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/actions/workflows/build.yml)
+[![test](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/actions/workflows/test.yml/badge.svg)](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/actions/workflows/test.yml)
+[![analysis](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/actions/workflows/analysis.yml/badge.svg)](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/actions/workflows/analysis.yml)
 [![GitHub issues](https://img.shields.io/github/issues/alisonoc-ALTER/Bed-Management-System-Backend)](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/issues)
 ![GitHub Created At](https://img.shields.io/github/created-at/alisonoc-ALTER/Bed-Management-System-Backend?logo=github)
 ![GitHub last commit](https://img.shields.io/github/last-commit/alisonoc-ALTER/Bed-Management-System-Backend?logo=github)
