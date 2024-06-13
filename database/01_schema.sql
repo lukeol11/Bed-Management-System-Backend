@@ -1,4 +1,7 @@
-CREATE DATABASE `bms`
+CREATE DATABASE IF NOT EXISTS `bms`;
+
+USE `bms`;
+
 CREATE TABLE
     `bed_occupancy` (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -9,7 +12,7 @@ CREATE TABLE
         `checkout_time` datetime DEFAULT NULL,
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 30 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `beds` (
@@ -21,7 +24,7 @@ CREATE TABLE
         `updated_at` datetime NOT NULL,
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 60 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `booking_requests` (
@@ -37,14 +40,14 @@ CREATE TABLE
         `patient_id` int NOT NULL,
         `current_bed` int NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 28 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `disabled_reasons` (
         `id` int NOT NULL AUTO_INCREMENT,
         `reason` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `hospitals` (
@@ -52,7 +55,7 @@ CREATE TABLE
         `description` varchar(255) NOT NULL,
         `location` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `patients` (
@@ -66,7 +69,7 @@ CREATE TABLE
         `created_at` datetime (6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
         `gender` enum ('Male', 'Female', 'Other') NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 29 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `treatment_levels` (
@@ -75,7 +78,7 @@ CREATE TABLE
         `description` varchar(255) NOT NULL,
         `equipment` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `users` (
@@ -90,7 +93,7 @@ CREATE TABLE
         `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `can_administrate` tinyint NOT NULL,
         PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 15 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
 
 CREATE TABLE
     `wards` (
@@ -107,4 +110,4 @@ CREATE TABLE
         KEY `FK_a39c6a05021db14dd1be6b36dd5` (`treatment_level`),
         CONSTRAINT `FK_a3893f2fca33f9b0b39aae1848e` FOREIGN KEY (`hospital_id`) REFERENCES `hospitals` (`id`),
         CONSTRAINT `FK_a39c6a05021db14dd1be6b36dd5` FOREIGN KEY (`treatment_level`) REFERENCES `treatment_levels` (`id`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+    );
