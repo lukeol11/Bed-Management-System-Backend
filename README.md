@@ -26,6 +26,7 @@
   - [Features](#features)
 - [Installation](#installation)
 - [Running the app](#running-the-app)
+- [Run Docker Compose](#run-docker-compose)
 - [Endpoints](#endpoints)
 - [Test](#test)
 - [Contributors](#contributors)
@@ -244,6 +245,33 @@ A swagger UI is available at `/api` after starting the application.
 ### Frontend
 
 The Vue.js frontend for this project can be found [here](https://github.com/alisonoc-ALTER/Bed-Management-System-Frontend)
+
+## Run Docker Compose
+
+1. Build the Application:
+   To build the application using Docker Compose, run the following command:
+
+   ```bash
+   docker-compose build
+   ```
+
+2. Create Network (if not already created):
+   If you have not already created the bms-network network, run:
+
+   ```bash
+   docker network create bms-network
+   ```
+
+3. Start the Application:
+   To start the application, run:
+
+   ```bash
+   docker-compose up
+   ```
+
+4. Start the Frontend Docker Compose:
+
+   Start the Docker Compose for the Frontend as documented [here](https://github.com/alisonoc-ALTER/Bed-Management-System-Frontend#Docker)
 
 ## Endpoints
 
