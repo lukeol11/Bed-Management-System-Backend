@@ -9,15 +9,15 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/alisonoc-ALTER/Bed-Management-System-Backend.svg?logo=github)](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/graphs/contributors/)
 [![GitHub license](https://img.shields.io/github/license/alisonoc-ALTER/Bed-Management-System-Backend?color=blue&logo=github)](https://github.com/alisonoc-ALTER/Bed-Management-System-Backend/blob/master/LICENSE)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=bugs)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-alter_Bed-Management-System-Backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=alisonoc-alter_Bed-Management-System-Backend)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=bugs)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=alisonoc-ALTER_Bed-Management-System-Backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=alisonoc-ALTER_Bed-Management-System-Backend)
 
 ## Table of Contents
 
