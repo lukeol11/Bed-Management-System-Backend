@@ -1,6 +1,9 @@
-version: '3'
+networks:
+  bms-network:
+    external: true
+
 services:
-  backend:
+  bms-backend:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,7 +11,7 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-      DB_HOST: "mysql-db"
+      DB_HOST: "bms-db"
       DB_PORT: 3306
       DB_USERNAME: "root"
       DB_PASSWORD: "admin"
@@ -16,8 +19,10 @@ services:
       DB_SYNCHRONIZE: "false"
     depends_on:
       - mysql-db
+    networks:
+      - bms-network
 
-  mysql-db:
+  bms-db:
     image: mysql:8.0
     restart: always
     environment:
@@ -27,3 +32,5 @@ services:
       - "3306:3306"
     volumes:
       - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - bms-network
