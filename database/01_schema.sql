@@ -111,3 +111,13 @@ CREATE TABLE
         CONSTRAINT `FK_a3893f2fca33f9b0b39aae1848e` FOREIGN KEY (`hospital_id`) REFERENCES `hospitals` (`id`),
         CONSTRAINT `FK_a39c6a05021db14dd1be6b36dd5` FOREIGN KEY (`treatment_level`) REFERENCES `treatment_levels` (`id`)
     );
+
+CREATE TABLE
+    `routing_history` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `from` varchar(255) NOT NULL,
+        `to` varchar(255) NOT NULL,
+        `user_id` int NOT NULL,
+        `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`)
+    );

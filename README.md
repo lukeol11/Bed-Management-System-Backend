@@ -337,6 +337,13 @@ The Vue.js frontend for this project can be found [here](https://github.com/alis
 | ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/transfers/approve     |
 | ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/transfers/delete/{id} |
 
+### Routing History
+
+| Method                                                                              | Endpoint                  |
+| ----------------------------------------------------------------------------------- | ------------------------- |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90) | /api/routing-history/add  |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)    | /api/routing-history/find |
+
 ## Test
 
 ```bash
