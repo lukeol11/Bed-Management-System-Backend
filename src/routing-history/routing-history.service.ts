@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoutingHistory } from './entities/routing-history.entity';
 import { CreateRoutingHistoryDto } from './dto/createRoutingHistory';
-import { Repository } from 'typeorm';
-import { Between } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 
 @Injectable()
 export class RoutingHistoryService {
