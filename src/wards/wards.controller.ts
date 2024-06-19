@@ -3,6 +3,9 @@ import {
     Controller,
     Delete,
     Get,
+    HttpException,
+    HttpStatus,
+    Headers,
     Param,
     Patch,
     Post,
@@ -14,11 +17,17 @@ import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Ward } from './entities/ward.entity';
 import { UpdateWardDto } from './dto/updateWard.dto';
 import { TreatmentLevelDto } from './dto/treatmentLevel.dto';
+import { UsersService } from 'src/users/users.service';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Controller('/api/wards')
 @ApiTags('wards')
 export class WardsController {
-    constructor(private readonly wardsService: WardsService) {}
+    constructor(
+        private readonly wardsService: WardsService,
+        private readonly usersService: UsersService
+    ) {}
 
     @Get('/all')
     @ApiResponse({
@@ -55,8 +64,24 @@ export class WardsController {
         description: 'Create a new ward',
         type: WardDto
     })
-    async createWard(@Body() ward: WardDto): Promise<WardDto> {
-        return this.wardsService.createWard(ward);
+    async createWard(
+        @Body() ward: WardDto,
+        @Headers('email') email?: string
+    ): Promise<WardDto> {
+        const requestingUser = await this.usersService.findByEmail(email);
+
+        if (
+            (requestingUser?.can_administrate &&
+                ward.hospital_id === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development'
+        ) {
+            return this.wardsService.createWard(ward);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 
     @Get('/find')
@@ -82,9 +107,24 @@ export class WardsController {
     })
     async updateWard(
         @Param('id') id: number,
-        @Body() ward: UpdateWardDto
+        @Body() ward: UpdateWardDto,
+        @Headers('email') email?: string
     ): Promise<WardDto> {
-        return this.wardsService.updateWard(id, ward);
+        const requestingUser = await this.usersService.findByEmail(email);
+        const wardDetails = await this.wardsService.findWardById(id);
+
+        if (
+            (requestingUser?.can_administrate &&
+                wardDetails.hospital_id === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development'
+        ) {
+            return this.wardsService.updateWard(id, ward);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 
     @Delete('/delete/:id')
@@ -93,8 +133,24 @@ export class WardsController {
         description: 'Delete ward by ID',
         type: Ward
     })
-    async deleteWard(@Param('id') id: number): Promise<string> {
-        return this.wardsService.deleteWard(id);
+    async deleteWard(
+        @Param('id') id: number,
+        @Headers('email') email?: string
+    ): Promise<string> {
+        const requestingUser = await this.usersService.findByEmail(email);
+        const ward = await this.wardsService.findWardById(id);
+
+        if (
+            (requestingUser?.can_administrate &&
+                ward.hospital_id === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development'
+        ) {
+            return this.wardsService.deleteWard(id);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 }
-

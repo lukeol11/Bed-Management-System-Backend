@@ -44,7 +44,6 @@ export class WardsService {
     }
 
     async updateWard(id: number, ward: UpdateWardDto): Promise<WardDto> {
-        // Check if the ward exists
         const currentWard = await this.findWardById(id);
         if (!currentWard) {
             throw new Error('Ward not found');
@@ -60,4 +59,3 @@ export class WardsService {
         return 'Ward deleted';
     }
 }
-

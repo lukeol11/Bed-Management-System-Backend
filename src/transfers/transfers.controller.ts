@@ -3,20 +3,29 @@ import {
     Controller,
     Delete,
     Get,
+    Headers,
+    HttpException,
+    HttpStatus,
     Param,
     Post,
     Query
 } from '@nestjs/common';
 import { TransfersService } from './transfers.service';
+import { UsersService } from 'src/users/users.service';
 import { BookingRequest } from './entities/booking_request.entity';
 import { BookingRequestDto } from './dto/booking_requests.dto';
 import { BookingApprovedDto } from './dto/booking_approved.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Controller('/api/transfers')
 @ApiTags('transfers')
 export class TransfersController {
-    constructor(private readonly transfersService: TransfersService) {}
+    constructor(
+        private readonly transfersService: TransfersService,
+        private readonly usersService: UsersService
+    ) {}
 
     @Get('/all')
     @ApiResponse({
@@ -55,9 +64,26 @@ export class TransfersController {
         type: BookingApprovedDto
     })
     async approveTransfer(
-        @Body() approval: BookingApprovedDto
+        @Body() approval: BookingApprovedDto,
+        @Headers('email') email?: string
     ): Promise<BookingApprovedDto> {
-        return this.transfersService.approveTransfer(approval);
+        const requestingUser = await this.usersService.findByEmail(email);
+        const bookingRequest = await this.transfersService.findById(
+            approval.id
+        );
+
+        if (
+            (requestingUser?.can_approve_requests &&
+                bookingRequest.hospitalId === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development'
+        ) {
+            return this.transfersService.approveTransfer(approval);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 
     @Delete('/delete/:id')
@@ -66,7 +92,24 @@ export class TransfersController {
         description: 'Delete a transfer by ID',
         type: BookingRequest
     })
-    async deleteTransfer(@Param('id') id: number): Promise<string> {
-        return this.transfersService.delete(id);
+    async deleteTransfer(
+        @Param('id') id: number,
+        @Headers('email') email?: string
+    ): Promise<string> {
+        const requestingUser = await this.usersService.findByEmail(email);
+        const bookingRequest = await this.transfersService.findById(id);
+
+        if (
+            (requestingUser?.can_approve_requests &&
+                bookingRequest.hospitalId === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development'
+        ) {
+            return this.transfersService.delete(id);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 }

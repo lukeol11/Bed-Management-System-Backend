@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { BookingRequest } from './entities/booking_request.entity';
 import { BookingRequestDto } from './dto/booking_requests.dto';
 import { BookingApprovedDto } from './dto/booking_approved.dto';
@@ -26,6 +26,13 @@ export class TransfersService {
         transfer: BookingRequestDto
     ): Promise<BookingRequestDto> {
         return this.transfersRepository.save(transfer);
+    }
+
+    async findById(id: number): Promise<BookingRequestDto> {
+        const options: FindOneOptions<BookingRequest> = {
+            where: { id: id }
+        };
+        return this.transfersRepository.findOne(options);
     }
 
     async approveTransfer(
