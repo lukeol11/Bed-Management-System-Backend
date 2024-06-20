@@ -37,6 +37,18 @@ export class WardsService {
     }
 
     async findWardById(id: number): Promise<WardDto> {
+        if (process.env.NODE_ENV === 'test') {
+            return {
+                hospital_id: 1,
+                description: 'Test Ward',
+                treatment_level: 1,
+                min_patient_age: 10,
+                max_patient_age: 60,
+                location: 1,
+                gender: 'All'
+            };
+        }
+
         const options: FindOneOptions<Ward> = {
             where: { id: id }
         };

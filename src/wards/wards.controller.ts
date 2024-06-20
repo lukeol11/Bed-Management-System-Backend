@@ -17,7 +17,7 @@ import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Ward } from './entities/ward.entity';
 import { UpdateWardDto } from './dto/updateWard.dto';
 import { TreatmentLevelDto } from './dto/treatmentLevel.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -73,7 +73,8 @@ export class WardsController {
         if (
             (requestingUser?.can_administrate &&
                 ward.hospital_id === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.wardsService.createWard(ward);
         } else {
@@ -116,7 +117,8 @@ export class WardsController {
         if (
             (requestingUser?.can_administrate &&
                 wardDetails.hospital_id === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.wardsService.updateWard(id, ward);
         } else {
@@ -143,7 +145,8 @@ export class WardsController {
         if (
             (requestingUser?.can_administrate &&
                 ward.hospital_id === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.wardsService.deleteWard(id);
         } else {

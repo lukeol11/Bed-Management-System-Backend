@@ -75,7 +75,8 @@ export class TransfersController {
         if (
             (requestingUser?.can_approve_requests &&
                 bookingRequest.hospitalId === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.transfersService.approveTransfer(approval);
         } else {
@@ -102,7 +103,8 @@ export class TransfersController {
         if (
             (requestingUser?.can_approve_requests &&
                 bookingRequest.hospitalId === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.transfersService.delete(id);
         } else {

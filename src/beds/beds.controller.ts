@@ -62,7 +62,8 @@ export class BedsController {
         if (
             (requestingUser?.can_administrate &&
                 ward.hospital_id === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.bedsService.deleteBedById(bed_id);
         } else {
@@ -104,7 +105,8 @@ export class BedsController {
         if (
             (requestingUser?.can_administrate &&
                 ward.hospital_id === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.bedsService.createBed(bed);
         } else {

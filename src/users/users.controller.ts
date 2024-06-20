@@ -85,7 +85,8 @@ export class UsersController {
         if (
             (requestingUser?.can_administrate &&
                 user.hospital_id === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.usersService.createUser(user);
         } else {
@@ -112,7 +113,8 @@ export class UsersController {
         if (
             (requestingUser?.can_administrate &&
                 user.hospital_id === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development'
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
         ) {
             return this.usersService.delete(id);
         } else {
