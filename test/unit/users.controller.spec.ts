@@ -114,7 +114,7 @@ describe('UsersController', () => {
             };
             jest.spyOn(usersService, 'createUser').mockResolvedValue(newUser);
 
-            expect(await controller.createWard(newUser)).toBe(newUser);
+            expect(await controller.createUser(newUser)).toBe(newUser);
         });
     });
 

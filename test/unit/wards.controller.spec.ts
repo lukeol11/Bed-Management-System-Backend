@@ -5,6 +5,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Ward } from '../../src/wards/entities/ward.entity';
 import { Hospital } from '../../src/hospitals/entities/hospital.entity';
 import { TreatmentLevel } from '../../src/wards/entities/treatment-level.entity';
+import { UsersService } from '../../src/users/users.service';
+import { User } from '../../src/users/entities/user.entity';
 
 describe('WardsController', () => {
     let controller: WardsController;
@@ -15,6 +17,7 @@ describe('WardsController', () => {
             controllers: [WardsController],
             providers: [
                 WardsService,
+                UsersService,
                 {
                     provide: getRepositoryToken(Ward),
                     useValue: {}
@@ -22,12 +25,15 @@ describe('WardsController', () => {
                 {
                     provide: getRepositoryToken(TreatmentLevel),
                     useValue: {}
+                },
+                {
+                    provide: getRepositoryToken(User),
+                    useValue: {}
                 }
             ]
         }).compile();
 
         controller = module.get<WardsController>(WardsController);
-        wardsService = module.get<WardsService>(WardsService);
     });
 
     it('should be defined', () => {

@@ -3,6 +3,9 @@ import {
     Controller,
     Delete,
     Get,
+    HttpException,
+    HttpStatus,
+    Headers,
     Param,
     Patch,
     Post,
@@ -13,11 +16,19 @@ import { CreateBedOccupancyDto } from './dto/createBedOccupancy.dto';
 import { CheckoutBedOccupancyDto } from './dto/checkoutBedOccupancy.dto';
 import { BedDto } from './dto/Bed.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UsersService } from 'src/users/users.service';
+import { WardsService } from 'src/wards/wards.service';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Controller('api/beds')
 @ApiTags('beds')
 export class BedsController {
-    constructor(private readonly bedsService: BedsService) {}
+    constructor(
+        private readonly bedsService: BedsService,
+        private readonly usersService: UsersService,
+        private readonly wardsService: WardsService
+    ) {}
 
     @Get('status/:ward_id')
     getBedStatus(@Param('ward_id') ward_id: number) {
@@ -40,8 +51,27 @@ export class BedsController {
     }
 
     @Delete('delete/:bed_id')
-    deleteBedById(@Param('bed_id') bed_id: number) {
-        return this.bedsService.deleteBedById(bed_id);
+    async deleteBedById(
+        @Param('bed_id') bed_id: number,
+        @Headers('email') email?: string
+    ) {
+        const requestingUser = await this.usersService.findByEmail(email);
+        const bed = await this.bedsService.getBedById(bed_id);
+        const ward = await this.wardsService.findWardById(bed.ward_id);
+
+        if (
+            (requestingUser?.can_administrate &&
+                ward.hospital_id === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
+        ) {
+            return this.bedsService.deleteBedById(bed_id);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 
     @Post('occupancy')
@@ -65,8 +95,26 @@ export class BedsController {
         description: 'Create a new bed',
         type: BedDto
     })
-    createBed(@Body() bed: BedDto): Promise<BedDto> {
-        return this.bedsService.createBed(bed);
+    async createBed(
+        @Body() bed: BedDto,
+        @Headers('email') email?: string
+    ): Promise<BedDto> {
+        const requestingUser = await this.usersService.findByEmail(email);
+        const ward = await this.wardsService.findWardById(bed.ward_id);
+
+        if (
+            (requestingUser?.can_administrate &&
+                ward.hospital_id === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
+        ) {
+            return this.bedsService.createBed(bed);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 
     @Post('checkout')
