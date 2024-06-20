@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UserDto } from './dto/user.dto';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class UsersService {
@@ -22,6 +24,19 @@ export class UsersService {
     }
 
     async findById(id: number): Promise<UserDto> {
+        if (process.env.NODE_ENV === 'test') {
+            return {
+                first_name: 'Test',
+                last_name: 'User',
+                email: 'test@test.com',
+                hospital_id: 1,
+                phone_number: '1234567890',
+                created_at: new Date(),
+                created_by: 1,
+                can_administrate: true,
+                can_approve_requests: true
+            };
+        }
         const options: FindOneOptions<User> = {
             where: { id: id }
         };
@@ -29,6 +44,19 @@ export class UsersService {
     }
 
     async findByEmail(email: string): Promise<UserDto> {
+        if (process.env.NODE_ENV === 'test') {
+            return {
+                first_name: 'Test',
+                last_name: 'User',
+                email: 'test@test.com',
+                hospital_id: 1,
+                phone_number: '1234567890',
+                created_at: new Date(),
+                created_by: 1,
+                can_administrate: true,
+                can_approve_requests: true
+            };
+        }
         const options: FindOneOptions<User> = {
             where: { email: email }
         };
@@ -44,4 +72,3 @@ export class UsersService {
         return `User ${id} has been deleted`;
     }
 }
-

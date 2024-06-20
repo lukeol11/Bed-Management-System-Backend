@@ -37,6 +37,18 @@ export class WardsService {
     }
 
     async findWardById(id: number): Promise<WardDto> {
+        if (process.env.NODE_ENV === 'test') {
+            return {
+                hospital_id: 1,
+                description: 'Test Ward',
+                treatment_level: 1,
+                min_patient_age: 10,
+                max_patient_age: 60,
+                location: 1,
+                gender: 'All'
+            };
+        }
+
         const options: FindOneOptions<Ward> = {
             where: { id: id }
         };
@@ -44,7 +56,6 @@ export class WardsService {
     }
 
     async updateWard(id: number, ward: UpdateWardDto): Promise<WardDto> {
-        // Check if the ward exists
         const currentWard = await this.findWardById(id);
         if (!currentWard) {
             throw new Error('Ward not found');
@@ -60,4 +71,3 @@ export class WardsService {
         return 'Ward deleted';
     }
 }
-

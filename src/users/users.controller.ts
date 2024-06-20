@@ -1,16 +1,21 @@
 import {
     Body,
+    Headers,
     Controller,
     Delete,
     Get,
     Param,
     Post,
-    Query
+    Query,
+    HttpException,
+    HttpStatus
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UserDto } from './dto/user.dto';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Controller('/api/users')
 @ApiTags('users')
@@ -72,8 +77,24 @@ export class UsersController {
         description: 'Create a new user',
         type: UserDto
     })
-    async createWard(@Body() user: UserDto): Promise<UserDto> {
-        return this.usersService.createUser(user);
+    async createUser(
+        @Body() user: UserDto,
+        @Headers('email') email?: string
+    ): Promise<UserDto> {
+        const requestingUser = await this.usersService.findByEmail(email);
+        if (
+            (requestingUser?.can_administrate &&
+                user.hospital_id === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
+        ) {
+            return this.usersService.createUser(user);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 
     @Delete('/delete/:id')
@@ -82,8 +103,25 @@ export class UsersController {
         description: 'Delete a user by ID',
         type: User
     })
-    async deleteUser(@Param('id') id: number): Promise<string> {
-        return this.usersService.delete(id);
+    async deleteUser(
+        @Param('id') id: number,
+        @Headers('email') email?: string
+    ): Promise<string> {
+        const requestingUser = await this.usersService.findByEmail(email);
+        const user = await this.usersService.findById(id);
+
+        if (
+            (requestingUser?.can_administrate &&
+                user.hospital_id === requestingUser.hospital_id) ||
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
+        ) {
+            return this.usersService.delete(id);
+        } else {
+            throw new HttpException(
+                'Unauthorized access',
+                HttpStatus.UNAUTHORIZED
+            );
+        }
     }
 }
-

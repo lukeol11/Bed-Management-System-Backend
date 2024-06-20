@@ -1,6 +1,8 @@
 # [Bed Management System Backend](https://github.com/lukeol11/Bed-Management-System-Backend)
 
 [![build](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/build.yml/badge.svg)](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/build.yml)
+[![test](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/test.yml/badge.svg)](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/test.yml)
+[![analysis](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/analysis.yml/badge.svg)](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/analysis.yml)
 [![GitHub issues](https://img.shields.io/github/issues/lukeol11/Bed-Management-System-Backend)](https://github.com/lukeol11/Bed-Management-System-Backend/issues)
 ![GitHub Created At](https://img.shields.io/github/created-at/lukeol11/Bed-Management-System-Backend?logo=github)
 ![GitHub last commit](https://img.shields.io/github/last-commit/lukeol11/Bed-Management-System-Backend?logo=github)
@@ -15,6 +17,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=lukeol11_Bed-Management-System-Backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=lukeol11_Bed-Management-System-Backend)
 
 ## Table of Contents
 
@@ -23,6 +26,7 @@
   - [Features](#features)
 - [Installation](#installation)
 - [Running the app](#running-the-app)
+- [Run Docker Compose](#run-docker-compose)
 - [Endpoints](#endpoints)
 - [Test](#test)
 - [Contributors](#contributors)
@@ -242,6 +246,33 @@ A swagger UI is available at `/api` after starting the application.
 
 The Vue.js frontend for this project can be found [here](https://github.com/lukeol11/Bed-Management-System-Frontend)
 
+## Run Docker Compose
+
+1. Build the Application:
+   To build the application using Docker Compose, run the following command:
+
+   ```bash
+   docker-compose build
+   ```
+
+2. Create Network (if not already created):
+   If you have not already created the bms-network network, run:
+
+   ```bash
+   docker network create bms-network
+   ```
+
+3. Start the Application:
+   To start the application, run:
+
+   ```bash
+   docker-compose up
+   ```
+
+4. Start the Frontend Docker Compose:
+
+   Start the Docker Compose for the Frontend as documented [here](https://github.com/lukeol11/Bed-Management-System-Frontend#Docker)
+
 ## Endpoints
 
 ### Users
@@ -305,6 +336,13 @@ The Vue.js frontend for this project can be found [here](https://github.com/luke
 | ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/transfers/create      |
 | ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/transfers/approve     |
 | ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/transfers/delete/{id} |
+
+### Routing History
+
+| Method                                                                              | Endpoint                  |
+| ----------------------------------------------------------------------------------- | ------------------------- |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90) | /api/routing-history/add  |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)    | /api/routing-history/find |
 
 ## Test
 
