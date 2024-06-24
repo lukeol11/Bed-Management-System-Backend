@@ -1,0 +1,91 @@
+config:
+    target: http://localhost:3000/api
+    phases:
+        - duration: 60
+          arrivalRate: 1
+          rampTo: 15
+          name: Warm up phase
+        - duration: 60
+          arrivalRate: 15
+          rampTo: 30
+          name: Ramp up load
+        - duration: 60
+          arrivalRate: 30
+          rampTo: 40
+          name: Spike phase
+    plugins:
+        ensure: {}
+        apdex: {}
+        metrics-by-endpoint: {}
+    apdex:
+        threshold: 100
+    ensure:
+        thresholds:
+            - http.response_time.p99: 100
+            - http.response_time.p95: 75
+scenarios:
+    - flow:
+          - loop:
+                - get:
+                      url: "/hospitals/all"
+                - get:
+                      url: "/users/find?email=test@test.com"
+                - get:
+                      url: "/wards/all?hospital_id=1"
+                - get:
+                      url: "/beds/status/1"
+                - get:
+                      url: "/beds/status/2"
+                - get:
+                      url: "/beds/status/3"
+                - get:
+                      url: "/beds/status/4"
+                - get:
+                      url: "/beds/status/1"
+                - get:
+                      url: "/beds/status/2"
+                - get:
+                      url: "/beds/status/3"
+                - get:
+                      url: "/beds/status/4"
+                - get:
+                      url: "/beds/status/1"
+                - get:
+                      url: "/beds/status/2"
+                - get:
+                      url: "/beds/status/3"
+                - get:
+                      url: "/beds/status/4"
+                - get:
+                      url: "/beds/status/1"
+                - get:
+                      url: "/beds/status/2"
+                - get:
+                      url: "/beds/status/3"
+                - get:
+                      url: "/beds/status/4"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+                - get:
+                      url: "/transfers/all"
+            count: 1
