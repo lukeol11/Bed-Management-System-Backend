@@ -21,9 +21,12 @@ CREATE TABLE
         `ward_id` int NOT NULL,
         `disabled` tinyint NOT NULL,
         `disabled_reason_id` int DEFAULT NULL,
+        'room_id' int,
         `updated_at` datetime NOT NULL,
         `created_at` datetime NOT NULL,
-        PRIMARY KEY (`id`)
+        PRIMARY KEY (`id`),
+        CONSTRAINT `fk_beds_rooms_id` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`),
+        CONSTRAINT `fk_beds_wards_id` FOREIGN KEY (`ward_id`) REFERENCES `wards` (`id`)
     );
 
 CREATE TABLE
@@ -119,5 +122,15 @@ CREATE TABLE
         `to` varchar(255) NOT NULL,
         `user_id` int NOT NULL,
         `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`)
+    );
+
+CREATE TABLE
+    `rooms` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `description` varchar(255) NOT NULL,
+        'ward_id' int NOT NULL,
+        `gender` enum ('Male', 'Female', 'All', 'Inherit') NOT NULL,
+        `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`)
     );
