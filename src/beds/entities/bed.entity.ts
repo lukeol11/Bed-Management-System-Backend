@@ -12,6 +12,9 @@ export class Bed {
     ward_id: number;
 
     @Column()
+    room_id: number;
+
+    @Column()
     disabled: boolean;
 
     @Column()

@@ -19,6 +19,10 @@ export class BedDto {
     ward_id: number;
 
     @ApiProperty()
+    @IsInt()
+    room_id: number;
+
+    @ApiProperty()
     @IsBoolean()
     disabled: boolean;
 }
