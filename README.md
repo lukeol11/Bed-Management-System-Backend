@@ -355,6 +355,9 @@ npm run test:e2e
 
 # test coverage
 npm run test:cov
+
+# artillery load test
+artillery run artillery.yaml
 ```
 
 ## Contributors
