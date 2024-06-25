@@ -130,7 +130,7 @@ CREATE TABLE
         `id` int NOT NULL AUTO_INCREMENT,
         `description` varchar(255) NOT NULL,
         'ward_id' int NOT NULL,
-        `gender` enum ('Male', 'Female', 'All', 'Inherit') NOT NULL,
+        `gender` enum ('Male', 'Female', 'All') NOT NULL,
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`)
     );

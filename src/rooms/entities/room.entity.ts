@@ -19,10 +19,10 @@ export class Room {
     @Column()
     ward_id: number;
 
-    @ApiProperty({ enum: ['Male', 'Female', 'All', 'Inherit'] })
+    @ApiProperty({ enum: ['Male', 'Female', 'All'] })
     @Column({
         type: 'enum',
-        enum: ['Male', 'Female', 'All', 'Inherit']
+        enum: ['Male', 'Female', 'All']
     })
-    gender: 'Male' | 'Female' | 'All' | 'Inherit';
+    gender: 'Male' | 'Female' | 'All';
 }

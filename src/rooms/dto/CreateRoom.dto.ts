@@ -15,6 +15,6 @@ export class CreateRoomDto {
     ward_id: number;
 
     @ApiProperty()
-    @IsEnum({ Male: 'Male', Female: 'Female', All: 'All', Inherit: 'Inherit' })
-    gender: 'Male' | 'Female' | 'All' | 'Inherit';
+    @IsEnum({ Male: 'Male', Female: 'Female', All: 'All' })
+    gender: 'Male' | 'Female' | 'All';
 }
