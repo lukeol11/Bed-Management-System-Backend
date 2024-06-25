@@ -23,6 +23,10 @@ export class Bed {
     ward_id: number;
 
     @ApiProperty()
+    @Column()
+    room_id: number;
+
+    @ApiProperty()
     @ManyToOne(() => Room)
     @JoinColumn({ name: 'room_id' })
     room: Room;
