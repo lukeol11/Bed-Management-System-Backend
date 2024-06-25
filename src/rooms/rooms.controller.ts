@@ -25,7 +25,7 @@ import { CreateRoomDto } from './dto/CreateRoom.dto';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-@Controller('rooms')
+@Controller('api/rooms')
 @ApiTags('rooms')
 export class RoomsController {
     constructor(
