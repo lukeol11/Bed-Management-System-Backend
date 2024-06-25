@@ -56,7 +56,8 @@ export class BedsService {
 
     async getBedById(bed_id: number): Promise<Bed> {
         return this.bedsRepository.findOne({
-            where: { id: bed_id }
+            where: { id: bed_id },
+            relations: ['room']
         });
     }
 
@@ -67,7 +68,8 @@ export class BedsService {
 
     async getAllBeds(ward_id: number): Promise<Bed[]> {
         return this.bedsRepository.find({
-            where: { ward_id }
+            where: { ward_id },
+            relations: ['room']
         });
     }
 

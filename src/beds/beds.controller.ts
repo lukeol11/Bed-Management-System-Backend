@@ -19,6 +19,9 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from 'src/users/users.service';
 import { WardsService } from 'src/wards/wards.service';
 import * as dotenv from 'dotenv';
+import { Bed } from './entities/bed.entity';
+import { BedStatusDto } from './dto/bedStatus.dto';
+import { BedOccupancy } from './entities/bedOccupancy.entity';
 dotenv.config();
 
 @Controller('api/beds')
@@ -30,31 +33,61 @@ export class BedsController {
         private readonly wardsService: WardsService
     ) {}
 
+    @ApiResponse({
+        status: 200,
+        description: 'Get bed status',
+        type: BedStatusDto,
+        isArray: true
+    })
     @Get('status/:ward_id')
-    getBedStatus(@Param('ward_id') ward_id: number) {
+    getBedStatus(@Param('ward_id') ward_id: number): Promise<BedStatusDto[]> {
         return this.bedsService.getBedStatus(ward_id);
     }
 
+    @ApiResponse({
+        status: 200,
+        description: 'Get all beds',
+        type: Bed,
+        isArray: true
+    })
     @Get('all/:ward_id')
-    getAllBeds(@Param('ward_id') ward_id: number) {
+    getAllBeds(@Param('ward_id') ward_id: number): Promise<Bed[]> {
         return this.bedsService.getAllBeds(ward_id);
     }
 
+    @ApiResponse({
+        status: 200,
+        description: 'Get active bed occupancy',
+        type: BedOccupancy,
+        isArray: true
+    })
     @Get('active/:bed_id')
-    getActiveBedOccupancy(@Param('bed_id') bed_id: number) {
+    getActiveBedOccupancy(
+        @Param('bed_id') bed_id: number
+    ): Promise<BedOccupancy[]> {
         return this.bedsService.getActiveBedOccupancy(bed_id);
     }
 
+    @ApiResponse({
+        status: 200,
+        description: 'Get bed by id',
+        type: Bed
+    })
     @Get('find/:bed_id')
-    getBedById(@Param('bed_id') bed_id: number) {
+    getBedById(@Param('bed_id') bed_id: number): Promise<Bed> {
         return this.bedsService.getBedById(bed_id);
     }
 
+    @ApiResponse({
+        status: 200,
+        description: 'Delete bed by id',
+        type: String
+    })
     @Delete('delete/:bed_id')
     async deleteBedById(
         @Param('bed_id') bed_id: number,
         @Headers('email') email?: string
-    ) {
+    ): Promise<string> {
         const requestingUser = await this.usersService.findByEmail(email);
         const bed = await this.bedsService.getBedById(bed_id);
         const ward = await this.wardsService.findWardById(bed.ward_id);
@@ -74,6 +107,11 @@ export class BedsController {
         }
     }
 
+    @ApiResponse({
+        status: 201,
+        description: 'Create a new bed occupancy',
+        type: CreateBedOccupancyDto
+    })
     @Post('occupancy')
     createBedOccupancy(@Body() createBedOccupancyDto: CreateBedOccupancyDto) {
         return this.bedsService.createBedOccupancy(createBedOccupancyDto);

@@ -10,6 +10,7 @@ import { TransfersModule } from './transfers/transfers.module';
 import { RoutingHistoryModule } from './routing-history/routing-history.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
     imports: [
@@ -25,7 +26,8 @@ import { APP_GUARD } from '@nestjs/core';
         HospitalsModule,
         BedsModule,
         TransfersModule,
-        RoutingHistoryModule
+        RoutingHistoryModule,
+        RoomsModule
     ],
     controllers: [AppController],
     providers: [
