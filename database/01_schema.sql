@@ -21,7 +21,7 @@ CREATE TABLE
         `ward_id` int NOT NULL,
         `disabled` tinyint NOT NULL,
         `disabled_reason_id` int DEFAULT NULL,
-        'room_id' int,
+        `room_id` int,
         `updated_at` datetime NOT NULL,
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`),
