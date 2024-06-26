@@ -23,7 +23,7 @@ export class Bed {
     ward_id: number;
 
     @ApiProperty()
-    @Column()
+    @Column({ nullable: true })
     room_id: number;
 
     @ApiProperty()
