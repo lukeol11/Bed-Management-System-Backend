@@ -6,6 +6,8 @@ import { BedOccupancy } from './entities/bedOccupancy.entity';
 import { CreateBedOccupancyDto } from './dto/createBedOccupancy.dto';
 import { CheckoutBedOccupancyDto } from './dto/checkoutBedOccupancy.dto';
 import { BedDto } from './dto/Bed.dto';
+import { BedStatus } from './entities/bedStatus.entity';
+import { DisabledReason } from './entities/disabledReasons.entity';
 
 @Injectable()
 export class BedsService {
@@ -13,12 +15,15 @@ export class BedsService {
         @InjectRepository(Bed)
         private bedsRepository: Repository<Bed>,
         @InjectRepository(BedOccupancy)
-        private bedOccupancyRepository: Repository<BedOccupancy>
+        private bedOccupancyRepository: Repository<BedOccupancy>,
+        @InjectRepository(DisabledReason)
+        private disabledReasonsRepository: Repository<DisabledReason>
     ) {}
 
-    async getBedStatus(ward_id: number): Promise<any[]> {
+    async getBedStatusByWard(ward_id: number): Promise<BedStatus[]> {
         const beds = await this.bedsRepository.find({
-            where: { ward_id: ward_id }
+            where: { ward_id: ward_id },
+            relations: ['disabled_reason']
         });
 
         const bedStatuses = await Promise.all(
@@ -32,7 +37,8 @@ export class BedsService {
                 return {
                     id: bed.id,
                     disabled: bed.disabled,
-                    occupied: occupancy ? true : false
+                    disabled_reason: bed.disabled_reason,
+                    occupied: !!occupancy
                 };
             })
         );
@@ -40,13 +46,47 @@ export class BedsService {
         return bedStatuses;
     }
 
-    async disableBed(bed_id: number): Promise<string> {
-        await this.bedsRepository.update(bed_id, { disabled: true });
+    async getBedStatusById(bed_id: number): Promise<BedStatus> {
+        const bed = await this.bedsRepository.findOne({
+            where: { id: bed_id },
+            relations: ['disabled_reason']
+        });
+
+        const occupancy = await this.bedOccupancyRepository
+            .createQueryBuilder('occupancy')
+            .where('occupancy.bed_id = :bed_id', { bed_id })
+            .andWhere('occupancy.checkout_time IS NULL')
+            .getOne();
+
+        return {
+            id: bed.id,
+            disabled: bed.disabled,
+            disabled_reason: bed.disabled_reason,
+            occupied: !!occupancy
+        };
+    }
+
+    async getBedStatusByIds(bed_ids: number[]): Promise<BedStatus[]> {
+        const bedStatusPromises = bed_ids.map(async (bed_id) => {
+            return this.getBedStatusById(bed_id);
+        });
+
+        return Promise.all(bedStatusPromises);
+    }
+
+    async disableBed(bed_id: number, reason_id: number): Promise<string> {
+        await this.bedsRepository.update(bed_id, {
+            disabled_reason_id: reason_id,
+            disabled: true
+        });
         return 'Bed disabled successfully';
     }
 
     async enableBed(bed_id: number): Promise<string> {
-        await this.bedsRepository.update(bed_id, { disabled: false });
+        await this.bedsRepository.update(bed_id, {
+            disabled_reason_id: null,
+            disabled: false
+        });
         return 'Bed enabled successfully';
     }
 
@@ -57,7 +97,7 @@ export class BedsService {
     async getBedById(bed_id: number): Promise<Bed> {
         return this.bedsRepository.findOne({
             where: { id: bed_id },
-            relations: ['room']
+            relations: ['room', 'disabled_reason']
         });
     }
 
@@ -69,7 +109,7 @@ export class BedsService {
     async getAllBeds(ward_id: number): Promise<Bed[]> {
         return this.bedsRepository.find({
             where: { ward_id },
-            relations: ['room']
+            relations: ['room', 'disabled_reason']
         });
     }
 
@@ -110,5 +150,9 @@ export class BedsService {
 
         await queryBuilder.execute();
         return 'Checked out successfully';
+    }
+
+    async getDisabledReasons(): Promise<DisabledReason[]> {
+        return this.disabledReasonsRepository.find();
     }
 }
