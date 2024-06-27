@@ -149,6 +149,8 @@ export class BedsService {
         }
 
         await queryBuilder.execute();
+
+        this.disableBed(bed_id, 1); // disabled_reason id 1 needs to be = 'Cleaning'
         return 'Checked out successfully';
     }
 
