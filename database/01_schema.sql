@@ -26,6 +26,7 @@ CREATE TABLE
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`),
         CONSTRAINT `fk_beds_rooms_id` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`),
+        CONSTRAINT `fk_beds_disabled_reasons_id` FOREIGN KEY (`disabled_reasons_id`) REFERENCES `disabled_reasons` (`id`),
         CONSTRAINT `fk_beds_wards_id` FOREIGN KEY (`ward_id`) REFERENCES `wards` (`id`)
     );
 
