@@ -13,10 +13,6 @@ export class BedStatus {
     disabled: boolean;
 
     @ApiProperty()
-    @IsBoolean()
-    occupied: boolean;
-
-    @ApiProperty()
     @ManyToOne(() => DisabledReason)
     @JoinColumn({ name: 'disabled_reason_id' })
     disabled_reason: DisabledReason;
