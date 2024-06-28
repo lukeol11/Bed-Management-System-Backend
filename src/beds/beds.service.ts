@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Bed } from './entities/bed.entity';
@@ -124,8 +124,14 @@ export class BedsService {
     async createBedOccupancy(
         dto: CreateBedOccupancyDto
     ): Promise<BedOccupancy> {
-        const occupancy = this.bedOccupancyRepository.create(dto);
-        await this.bedOccupancyRepository.save(occupancy);
+        let occupancy = null;
+        if (!(await this.getBedStatusById(dto.bed_id)).disabled) {
+            this.disableBed(dto.bed_id, 2); // disabled_reason id 2 needs to be = 'Occupied'
+            occupancy = this.bedOccupancyRepository.create(dto);
+            await this.bedOccupancyRepository.save(occupancy);
+        } else {
+            throw new HttpException('Bed is disabled', HttpStatus.CONFLICT);
+        }
         return occupancy;
     }
 
