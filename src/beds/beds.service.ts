@@ -28,22 +28,24 @@ export class BedsService {
 
         const bedStatuses = await Promise.all(
             beds.map(async (bed) => {
-                const occupancy = await this.bedOccupancyRepository
-                    .createQueryBuilder('occupancy')
-                    .where('occupancy.bed_id = :bed_id', { bed_id: bed.id })
-                    .andWhere('occupancy.checkout_time IS NULL')
-                    .getOne();
-
                 return {
                     id: bed.id,
                     disabled: bed.disabled,
-                    disabled_reason: bed.disabled_reason,
-                    occupied: !!occupancy
+                    disabled_reason: bed.disabled_reason
                 };
             })
         );
 
         return bedStatuses;
+    }
+
+    async getBedStatusByWardIds(ward_ids: number[]): Promise<BedStatus[]> {
+        const bedStatusPromises = ward_ids.map(async (ward_id) => {
+            return this.getBedStatusByWard(ward_id);
+        });
+
+        const bedStatuses = await Promise.all(bedStatusPromises);
+        return bedStatuses.flat();
     }
 
     async getBedStatusById(bed_id: number): Promise<BedStatus> {
@@ -52,17 +54,10 @@ export class BedsService {
             relations: ['disabled_reason']
         });
 
-        const occupancy = await this.bedOccupancyRepository
-            .createQueryBuilder('occupancy')
-            .where('occupancy.bed_id = :bed_id', { bed_id })
-            .andWhere('occupancy.checkout_time IS NULL')
-            .getOne();
-
         return {
             id: bed.id,
             disabled: bed.disabled,
-            disabled_reason: bed.disabled_reason,
-            occupied: !!occupancy
+            disabled_reason: bed.disabled_reason
         };
     }
 

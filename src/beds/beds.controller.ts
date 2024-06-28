@@ -46,6 +46,12 @@ export class BedsController {
         type: Number
     })
     @ApiQuery({
+        name: 'ward_ids',
+        required: false,
+        type: Number,
+        isArray: true
+    })
+    @ApiQuery({
         name: 'bed_ids',
         required: false,
         type: Number,
@@ -54,12 +60,15 @@ export class BedsController {
     @Get('statuses')
     getBedStatus(
         @Query('ward_id') ward_id: number,
-        @Query('bed_ids') bed_ids: number[]
+        @Query('bed_ids') bed_ids: number[],
+        @Query('ward_ids') ward_ids: number[]
     ): Promise<BedStatus[]> {
         if (ward_id) {
             return this.bedsService.getBedStatusByWard(ward_id);
         } else if (bed_ids) {
             return this.bedsService.getBedStatusByIds(bed_ids);
+        } else if (ward_ids) {
+            return this.bedsService.getBedStatusByWardIds(ward_ids);
         } else {
             throw new HttpException(
                 'Please provide a ward_id or bed_ids',
