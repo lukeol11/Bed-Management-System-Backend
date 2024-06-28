@@ -78,11 +78,23 @@ export class BedsService {
     }
 
     async enableBed(bed_id: number): Promise<string> {
-        await this.bedsRepository.update(bed_id, {
-            disabled_reason_id: null,
-            disabled: false
-        });
-        return 'Bed enabled successfully';
+        const occupancy = await this.bedOccupancyRepository
+            .createQueryBuilder('occupancy')
+            .where('occupancy.bed_id = :bed_id', { bed_id: bed_id })
+            .andWhere('occupancy.checkout_time IS NULL')
+            .getOne();
+        if (!occupancy) {
+            await this.bedsRepository.update(bed_id, {
+                disabled_reason_id: null,
+                disabled: false
+            });
+            return 'Bed enabled successfully';
+        } else {
+            throw new HttpException(
+                'Bed cannot be enabled as it is currently occupied',
+                HttpStatus.CONFLICT
+            );
+        }
     }
 
     async createBed(bed: BedDto): Promise<BedDto> {
