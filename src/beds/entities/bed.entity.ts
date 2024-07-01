@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Room } from 'src/rooms/entities/room.entity';
+import { DisabledReason } from './disabledReasons.entity';
 import {
     Entity,
     Column,
@@ -46,4 +47,9 @@ export class Bed {
     @ApiProperty()
     @Column({ nullable: true })
     disabled_reason_id: number;
+
+    @ApiProperty()
+    @ManyToOne(() => DisabledReason)
+    @JoinColumn({ name: 'disabled_reason_id' })
+    disabled_reason: DisabledReason;
 }

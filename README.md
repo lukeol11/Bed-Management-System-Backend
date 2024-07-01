@@ -307,26 +307,27 @@ The Vue.js frontend for this project can be found [here](https://github.com/alis
 
 ### Hospitals
 
-| Method                                                                                    | Endpoint                   |
-| ----------------------------------------------------------------------------------------- | -------------------------- |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/hospitals/all         |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/hospitals/find        |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/hospitals/delete/{id} |
+| Method                                                                           | Endpoint            |
+| -------------------------------------------------------------------------------- | ------------------- |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe) | /api/hospitals/all  |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe) | /api/hospitals/find |
 
 ### Beds
 
-| Method                                                                                    | Endpoint                   |
-| ----------------------------------------------------------------------------------------- | -------------------------- |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/status/{ward_id} |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/all/{ward_id}    |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/active/{bed_id}  |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/find/{bed_id}    |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/beds/delete/{bed_id}  |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/occupancy        |
-| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/beds/disable/{bed_id} |
-| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/beds/enable/{bed_id}  |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/create           |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/checkout         |
+| Method                                                                                    | Endpoint                       |
+| ----------------------------------------------------------------------------------------- | ------------------------------ |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/statuses             |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/all/{ward_id}        |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/find/{bed_id}        |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/find/{bed_id}/active |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/find/{bed_id}/status |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/beds/delete/{bed_id}      |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/occupancy            |
+| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/beds/disable/{bed_id}     |
+| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/beds/enable/{bed_id}      |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/create               |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/checkout             |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/disabled_reasons     |
 
 ### Transfers
 
@@ -343,6 +344,15 @@ The Vue.js frontend for this project can be found [here](https://github.com/alis
 | ----------------------------------------------------------------------------------- | ------------------------- |
 | ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90) | /api/routing-history/add  |
 | ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)    | /api/routing-history/find |
+
+### Rooms
+
+| Method                                                                                    | Endpoint               |
+| ----------------------------------------------------------------------------------------- | ---------------------- |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/rooms/all         |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/rooms/find        |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/rooms/delete/{id} |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/rooms/create      |
 
 ## Test
 

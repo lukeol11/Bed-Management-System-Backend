@@ -15,13 +15,14 @@ import { BedsService } from './beds.service';
 import { CreateBedOccupancyDto } from './dto/createBedOccupancy.dto';
 import { CheckoutBedOccupancyDto } from './dto/checkoutBedOccupancy.dto';
 import { BedDto } from './dto/Bed.dto';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from 'src/users/users.service';
 import { WardsService } from 'src/wards/wards.service';
 import * as dotenv from 'dotenv';
 import { Bed } from './entities/bed.entity';
-import { BedStatusDto } from './dto/bedStatus.dto';
+import { BedStatus } from './entities/bedStatus.entity';
 import { BedOccupancy } from './entities/bedOccupancy.entity';
+import { DisabledReason } from './entities/disabledReasons.entity';
 dotenv.config();
 
 @Controller('api/beds')
@@ -36,12 +37,52 @@ export class BedsController {
     @ApiResponse({
         status: 200,
         description: 'Get bed status',
-        type: BedStatusDto,
+        type: BedStatus,
         isArray: true
     })
-    @Get('status/:ward_id')
-    getBedStatus(@Param('ward_id') ward_id: number): Promise<BedStatusDto[]> {
-        return this.bedsService.getBedStatus(ward_id);
+    @ApiQuery({
+        name: 'ward_id',
+        required: false,
+        type: Number
+    })
+    @ApiQuery({
+        name: 'ward_ids',
+        required: false,
+        type: Number,
+        isArray: true
+    })
+    @ApiQuery({
+        name: 'bed_ids',
+        required: false,
+        type: Number,
+        isArray: true
+    })
+    @ApiQuery({
+        name: 'hospital_id',
+        required: false,
+        type: Number
+    })
+    @Get('statuses')
+    getBedStatus(
+        @Query('ward_id') ward_id: number,
+        @Query('bed_ids') bed_ids: number[],
+        @Query('ward_ids') ward_ids: number[],
+        @Query('hospital_id') hospital_id: number
+    ): Promise<BedStatus[]> {
+        if (ward_id) {
+            return this.bedsService.getBedStatusByWard(ward_id);
+        } else if (bed_ids) {
+            return this.bedsService.getBedStatusByIds(bed_ids);
+        } else if (ward_ids) {
+            return this.bedsService.getBedStatusByWardIds(ward_ids);
+        } else if (hospital_id) {
+            return this.bedsService.getBedStatusByHospital(hospital_id);
+        } else {
+            throw new HttpException(
+                'Please provide a ward_id or bed_ids',
+                HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
     @ApiResponse({
@@ -57,11 +98,21 @@ export class BedsController {
 
     @ApiResponse({
         status: 200,
+        description: 'Get bed by id',
+        type: Bed
+    })
+    @Get('find/:bed_id')
+    getBedById(@Param('bed_id') bed_id: number): Promise<Bed> {
+        return this.bedsService.getBedById(bed_id);
+    }
+
+    @ApiResponse({
+        status: 200,
         description: 'Get active bed occupancy',
         type: BedOccupancy,
         isArray: true
     })
-    @Get('active/:bed_id')
+    @Get('find/:bed_id/active')
     getActiveBedOccupancy(
         @Param('bed_id') bed_id: number
     ): Promise<BedOccupancy[]> {
@@ -70,12 +121,12 @@ export class BedsController {
 
     @ApiResponse({
         status: 200,
-        description: 'Get bed by id',
-        type: Bed
+        description: 'Get bed status by id',
+        type: BedStatus
     })
-    @Get('find/:bed_id')
-    getBedById(@Param('bed_id') bed_id: number): Promise<Bed> {
-        return this.bedsService.getBedById(bed_id);
+    @Get('find/:bed_id/status')
+    getBedStatusById(@Param('bed_id') bed_id: number): Promise<BedStatus> {
+        return this.bedsService.getBedStatusById(bed_id);
     }
 
     @ApiResponse({
@@ -118,8 +169,11 @@ export class BedsController {
     }
 
     @Patch('disable/:bed_id')
-    disableBed(@Param('bed_id') bed_id: number) {
-        return this.bedsService.disableBed(bed_id);
+    disableBed(
+        @Param('bed_id') bed_id: number,
+        @Query('reason_id') reason_id: number
+    ) {
+        return this.bedsService.disableBed(bed_id, reason_id);
     }
 
     @Patch('enable/:bed_id')
@@ -166,5 +220,16 @@ export class BedsController {
             bed_id,
             patient_id
         );
+    }
+
+    @Get('disabled_reasons')
+    @ApiResponse({
+        status: 200,
+        description: 'Get all disabled reasons',
+        type: DisabledReason,
+        isArray: true
+    })
+    getDisabledReasons(): Promise<DisabledReason[]> {
+        return this.bedsService.getDisabledReasons();
     }
 }

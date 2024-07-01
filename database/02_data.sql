@@ -42,4 +42,12 @@ VALUES
 INSERT INTO
     bms.disabled_reasons (reason)
 VALUES
-    ('Cleaning');
+    ('Cleaning Required'),
+    ('Occupied'),
+    ('Checkout Scheduled'),
+    ('Out of Order');
+
+INSERT INTO
+    bms.treatment_levels (name, description, equipment)
+VALUES
+    ('Default', 'Default treatment', 'Standard');

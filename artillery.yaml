@@ -33,37 +33,37 @@ scenarios:
                 - get:
                       url: "/wards/all?hospital_id=1"
                 - get:
-                      url: "/beds/status/1"
+                      url: "/beds/find/1/status"
                 - get:
-                      url: "/beds/status/2"
+                      url: "/beds/find/2/status"
                 - get:
-                      url: "/beds/status/3"
+                      url: "/beds/find/3/status"
                 - get:
-                      url: "/beds/status/4"
+                      url: "/beds/find/4/status"
                 - get:
-                      url: "/beds/status/1"
+                      url: "/beds/find/1/status"
                 - get:
-                      url: "/beds/status/2"
+                      url: "/beds/find/2/status"
                 - get:
-                      url: "/beds/status/3"
+                      url: "/beds/find/3/status"
                 - get:
-                      url: "/beds/status/4"
+                      url: "/beds/find/4/status"
                 - get:
-                      url: "/beds/status/1"
+                      url: "/beds/find/1/status"
                 - get:
-                      url: "/beds/status/2"
+                      url: "/beds/find/2/status"
                 - get:
-                      url: "/beds/status/3"
+                      url: "/beds/find/3/status"
                 - get:
-                      url: "/beds/status/4"
+                      url: "/beds/find/4/status"
                 - get:
-                      url: "/beds/status/1"
+                      url: "/beds/find/1/status"
                 - get:
-                      url: "/beds/status/2"
+                      url: "/beds/find/2/status"
                 - get:
-                      url: "/beds/status/3"
+                      url: "/beds/find/3/status"
                 - get:
-                      url: "/beds/status/4"
+                      url: "/beds/find/4/status"
                 - get:
                       url: "/transfers/all"
                 - get:
