@@ -57,11 +57,17 @@ export class BedsController {
         type: Number,
         isArray: true
     })
+    @ApiQuery({
+        name: 'hospital_id',
+        required: false,
+        type: Number
+    })
     @Get('statuses')
     getBedStatus(
         @Query('ward_id') ward_id: number,
         @Query('bed_ids') bed_ids: number[],
-        @Query('ward_ids') ward_ids: number[]
+        @Query('ward_ids') ward_ids: number[],
+        @Query('hospital_id') hospital_id: number
     ): Promise<BedStatus[]> {
         if (ward_id) {
             return this.bedsService.getBedStatusByWard(ward_id);
@@ -69,22 +75,14 @@ export class BedsController {
             return this.bedsService.getBedStatusByIds(bed_ids);
         } else if (ward_ids) {
             return this.bedsService.getBedStatusByWardIds(ward_ids);
+        } else if (hospital_id) {
+            return this.bedsService.getBedStatusByHospital(hospital_id);
         } else {
             throw new HttpException(
                 'Please provide a ward_id or bed_ids',
                 HttpStatus.BAD_REQUEST
             );
         }
-    }
-
-    @ApiResponse({
-        status: 200,
-        description: 'Get bed status by id',
-        type: BedStatus
-    })
-    @Get('status/:bed_id')
-    getBedStatusById(@Param('bed_id') bed_id: number): Promise<BedStatus> {
-        return this.bedsService.getBedStatusById(bed_id);
     }
 
     @ApiResponse({
@@ -100,11 +98,21 @@ export class BedsController {
 
     @ApiResponse({
         status: 200,
+        description: 'Get bed by id',
+        type: Bed
+    })
+    @Get('find/:bed_id')
+    getBedById(@Param('bed_id') bed_id: number): Promise<Bed> {
+        return this.bedsService.getBedById(bed_id);
+    }
+
+    @ApiResponse({
+        status: 200,
         description: 'Get active bed occupancy',
         type: BedOccupancy,
         isArray: true
     })
-    @Get('active/:bed_id')
+    @Get('find/:bed_id/active')
     getActiveBedOccupancy(
         @Param('bed_id') bed_id: number
     ): Promise<BedOccupancy[]> {
@@ -113,12 +121,12 @@ export class BedsController {
 
     @ApiResponse({
         status: 200,
-        description: 'Get bed by id',
-        type: Bed
+        description: 'Get bed status by id',
+        type: BedStatus
     })
-    @Get('find/:bed_id')
-    getBedById(@Param('bed_id') bed_id: number): Promise<Bed> {
-        return this.bedsService.getBedById(bed_id);
+    @Get('find/:bed_id/status')
+    getBedStatusById(@Param('bed_id') bed_id: number): Promise<BedStatus> {
+        return this.bedsService.getBedStatusById(bed_id);
     }
 
     @ApiResponse({

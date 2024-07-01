@@ -8,6 +8,7 @@ import { CheckoutBedOccupancyDto } from './dto/checkoutBedOccupancy.dto';
 import { BedDto } from './dto/Bed.dto';
 import { BedStatus } from './entities/bedStatus.entity';
 import { DisabledReason } from './entities/disabledReasons.entity';
+import { WardsService } from 'src/wards/wards.service';
 
 @Injectable()
 export class BedsService {
@@ -17,7 +18,8 @@ export class BedsService {
         @InjectRepository(BedOccupancy)
         private bedOccupancyRepository: Repository<BedOccupancy>,
         @InjectRepository(DisabledReason)
-        private disabledReasonsRepository: Repository<DisabledReason>
+        private disabledReasonsRepository: Repository<DisabledReason>,
+        private readonly wardsService: WardsService
     ) {}
 
     async getBedStatusByWard(ward_id: number): Promise<BedStatus[]> {
@@ -37,6 +39,13 @@ export class BedsService {
         );
 
         return bedStatuses;
+    }
+
+    async getBedStatusByHospital(hospital_id: number): Promise<BedStatus[]> {
+        const wardIds = (await this.wardsService.findAll(hospital_id)).map(
+            (ward) => ward.id
+        );
+        return await this.getBedStatusByWardIds(wardIds);
     }
 
     async getBedStatusByWardIds(ward_ids: number[]): Promise<BedStatus[]> {
