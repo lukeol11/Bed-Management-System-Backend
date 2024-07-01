@@ -1,12 +1,4 @@
-import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    ManyToOne,
-    JoinColumn
-} from 'typeorm';
-import { Hospital } from '../../hospitals/entities/hospital.entity';
-import { TreatmentLevel } from './treatment-level.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('wards')
@@ -45,14 +37,4 @@ export class Ward {
     @ApiProperty()
     @Column()
     hospital_id: number;
-
-    @ApiProperty()
-    @ManyToOne(() => Hospital)
-    @JoinColumn({ name: 'hospital_id' })
-    hospital: Hospital;
-
-    @ApiProperty()
-    @ManyToOne(() => TreatmentLevel)
-    @JoinColumn({ name: 'treatment_level' })
-    treatmentLevel: TreatmentLevel;
 }
