@@ -1,4 +1,10 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+    Injectable,
+    HttpException,
+    HttpStatus,
+    Inject,
+    forwardRef
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Bed } from './entities/bed.entity';
@@ -9,6 +15,7 @@ import { BedDto } from './dto/Bed.dto';
 import { BedStatus } from './entities/bedStatus.entity';
 import { DisabledReason } from './entities/disabledReasons.entity';
 import { WardsService } from 'src/wards/wards.service';
+import { TransfersService } from 'src/transfers/transfers.service';
 
 @Injectable()
 export class BedsService {
@@ -19,7 +26,10 @@ export class BedsService {
         private bedOccupancyRepository: Repository<BedOccupancy>,
         @InjectRepository(DisabledReason)
         private disabledReasonsRepository: Repository<DisabledReason>,
-        private readonly wardsService: WardsService
+        @Inject(forwardRef(() => WardsService))
+        private readonly wardsService: WardsService,
+        @Inject(forwardRef(() => TransfersService))
+        private readonly transfersService: TransfersService
     ) {}
 
     async getBedStatusByWard(ward_id: number): Promise<BedStatus[]> {
@@ -106,7 +116,7 @@ export class BedsService {
         }
     }
 
-    async createBed(bed: BedDto): Promise<BedDto> {
+    async createBed(bed: BedDto): Promise<Bed> {
         return this.bedsRepository.save(bed);
     }
 
@@ -140,7 +150,7 @@ export class BedsService {
     async createBedOccupancy(
         dto: CreateBedOccupancyDto
     ): Promise<BedOccupancy> {
-        let occupancy = null;
+        let occupancy: BedOccupancy = null;
         if (!(await this.getBedStatusById(dto.bed_id)).disabled) {
             this.disableBed(dto.bed_id, 2); // disabled_reason id 2 needs to be = 'Occupied'
             occupancy = this.bedOccupancyRepository.create(dto);
@@ -170,6 +180,14 @@ export class BedsService {
             queryBuilder.andWhere('patient_id = :patient_id', { patient_id });
         }
 
+        const pendingTransfers = await this.transfersService.findByPatientId(
+            patient_id,
+            'pending'
+        );
+        pendingTransfers.forEach((transfer) => {
+            console.info('Deleting transfer', transfer.id);
+            this.transfersService.delete(transfer.id);
+        });
         await queryBuilder.execute();
 
         this.disableBed(bed_id, 1); // disabled_reason id 1 needs to be = 'Cleaning'
