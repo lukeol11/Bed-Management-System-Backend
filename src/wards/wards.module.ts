@@ -14,6 +14,7 @@ import { User } from 'src/users/entities/user.entity';
         TypeOrmModule.forFeature([Ward, TreatmentLevel, User])
     ],
     controllers: [WardsController],
-    providers: [WardsService, UsersService]
+    providers: [WardsService, UsersService],
+    exports: [WardsService]
 })
 export class WardsModule {}

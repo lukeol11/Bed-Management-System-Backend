@@ -185,12 +185,12 @@ export class BedsController {
     @ApiResponse({
         status: 201,
         description: 'Create a new bed',
-        type: BedDto
+        type: Bed
     })
     async createBed(
         @Body() bed: BedDto,
         @Headers('email') email?: string
-    ): Promise<BedDto> {
+    ): Promise<Bed> {
         const requestingUser = await this.usersService.findByEmail(email);
         const ward = await this.wardsService.findWardById(bed.ward_id);
 
