@@ -56,6 +56,25 @@ export class TransfersService {
         }
     }
 
+    async findByCreatedById(
+        created_by: number,
+        type: string
+    ): Promise<BookingRequest[]> {
+        if (type === 'approved') {
+            return this.transfersRepository.find({
+                where: { createdBy: created_by, approvedBy: Not(IsNull()) }
+            });
+        } else if (type === 'pending') {
+            return this.transfersRepository.find({
+                where: { createdBy: created_by, approvedBy: IsNull() }
+            });
+        } else {
+            return this.transfersRepository.find({
+                where: { createdBy: created_by }
+            });
+        }
+    }
+
     async approveTransfer(
         approval: BookingApprovedDto
     ): Promise<BookingRequest> {

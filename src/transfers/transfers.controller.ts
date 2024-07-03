@@ -45,7 +45,7 @@ export class TransfersController {
         return this.transfersService.findAll(hospitalId);
     }
 
-    @Get('/find')
+    @Get('/find/patient_id/')
     @ApiResponse({
         status: 200,
         description: 'Get a transfer by Patient ID',
@@ -68,6 +68,31 @@ export class TransfersController {
         @Query('type') type?: string
     ): Promise<BookingRequest[]> {
         return this.transfersService.findByPatientId(patientId, type);
+    }
+
+    @Get('/find/created_by/')
+    @ApiResponse({
+        status: 200,
+        description: 'Get a transfer by Created By ID',
+        type: BookingRequest,
+        isArray: true
+    })
+    @ApiQuery({
+        name: 'user_id',
+        required: true,
+        type: Number
+    })
+    @ApiQuery({
+        name: 'type',
+        required: false,
+        type: String,
+        enum: ['approved', 'pending']
+    })
+    async getTransferByCreatedById(
+        @Query('user_id') userId: number,
+        @Query('type') type?: string
+    ): Promise<BookingRequest[]> {
+        return this.transfersService.findByCreatedById(userId, type);
     }
 
     @Post('/create')
