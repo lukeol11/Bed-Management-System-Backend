@@ -43,9 +43,7 @@ describe('WardsService', () => {
                     treatment_level: 1,
                     location: 1,
                     gender: 'All',
-                    hospital_id: 1,
-                    hospital: null,
-                    treatmentLevel: null
+                    hospital_id: 1
                 }
             ];
             jest.spyOn(repository, 'find').mockResolvedValue(wards);

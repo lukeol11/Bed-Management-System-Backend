@@ -3,7 +3,6 @@ import { WardsController } from '../../src/wards/wards.controller';
 import { WardsService } from '../../src/wards/wards.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Ward } from '../../src/wards/entities/ward.entity';
-import { Hospital } from '../../src/hospitals/entities/hospital.entity';
 import { TreatmentLevel } from '../../src/wards/entities/treatment-level.entity';
 import { UsersService } from '../../src/users/users.service';
 import { User } from '../../src/users/entities/user.entity';
@@ -51,9 +50,7 @@ describe('WardsController', () => {
                     treatment_level: 1,
                     location: 1,
                     gender: 'Male',
-                    hospital_id: 1,
-                    hospital: new Hospital(),
-                    treatmentLevel: new TreatmentLevel()
+                    hospital_id: 1
                 }
             ];
             jest.spyOn(controller, 'getAllWards').mockResolvedValue(wards);
@@ -72,9 +69,7 @@ describe('WardsController', () => {
                 treatment_level: 1,
                 location: 1,
                 gender: 'Male',
-                hospital_id: 1,
-                hospital: new Hospital(),
-                treatmentLevel: new TreatmentLevel()
+                hospital_id: 1
             };
             jest.spyOn(controller, 'getWardById').mockResolvedValue(ward);
 

@@ -15,7 +15,7 @@ import { UsersService } from 'src/users/users.service';
 import { BookingRequest } from './entities/booking_request.entity';
 import { BookingRequestDto } from './dto/booking_requests.dto';
 import { BookingApprovedDto } from './dto/booking_approved.dto';
-import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -31,7 +31,7 @@ export class TransfersController {
     @ApiResponse({
         status: 200,
         description: 'Get all transfers or filter by hospital ID',
-        type: BookingRequestDto,
+        type: BookingRequest,
         isArray: true
     })
     @ApiQuery({
@@ -41,19 +41,72 @@ export class TransfersController {
     })
     async getAllTransfers(
         @Query('hospital_id') hospitalId?: number
-    ): Promise<BookingRequestDto[]> {
+    ): Promise<BookingRequest[]> {
         return this.transfersService.findAll(hospitalId);
+    }
+
+    @Get('/find/patient_id/')
+    @ApiResponse({
+        status: 200,
+        description: 'Get a transfer by Patient ID',
+        type: BookingRequest,
+        isArray: true
+    })
+    @ApiQuery({
+        name: 'patient_id',
+        required: true,
+        type: Number
+    })
+    @ApiQuery({
+        name: 'type',
+        required: false,
+        type: String,
+        enum: ['approved', 'pending']
+    })
+    async getTransferByPatientId(
+        @Query('patient_id') patientId: number,
+        @Query('type') type?: string
+    ): Promise<BookingRequest[]> {
+        return this.transfersService.findByPatientId(patientId, type);
+    }
+
+    @Get('/find/created_by/')
+    @ApiResponse({
+        status: 200,
+        description: 'Get a transfer by Created By ID',
+        type: BookingRequest,
+        isArray: true
+    })
+    @ApiQuery({
+        name: 'user_id',
+        required: true,
+        type: Number
+    })
+    @ApiQuery({
+        name: 'type',
+        required: false,
+        type: String,
+        enum: ['approved', 'pending']
+    })
+    async getTransferByCreatedById(
+        @Query('user_id') userId: number,
+        @Query('type') type?: string
+    ): Promise<BookingRequest[]> {
+        return this.transfersService.findByCreatedById(userId, type);
     }
 
     @Post('/create')
     @ApiResponse({
         status: 201,
         description: 'Create a new transfer',
+        type: BookingRequest
+    })
+    @ApiBody({
         type: BookingRequestDto
     })
     async createTransfer(
         @Body() transfer: BookingRequestDto
-    ): Promise<BookingRequestDto> {
+    ): Promise<BookingRequest> {
         return this.transfersService.createTransfer(transfer);
     }
 
@@ -61,12 +114,12 @@ export class TransfersController {
     @ApiResponse({
         status: 200,
         description: 'Approve a transfer',
-        type: BookingApprovedDto
+        type: BookingRequest
     })
     async approveTransfer(
         @Body() approval: BookingApprovedDto,
         @Headers('email') email?: string
-    ): Promise<BookingApprovedDto> {
+    ): Promise<BookingRequest> {
         const requestingUser = await this.usersService.findByEmail(email);
         const bookingRequest = await this.transfersService.findById(
             approval.id
