@@ -33,7 +33,7 @@ export class WardsController {
     @ApiResponse({
         status: 200,
         description: 'Get all wards by hospital ID',
-        type: WardDto,
+        type: Ward,
         isArray: true
     })
     @ApiQuery({
@@ -43,7 +43,7 @@ export class WardsController {
     })
     async getAllWards(
         @Query('hospital_id') hospitalId?: number
-    ): Promise<WardDto[]> {
+    ): Promise<Ward[]> {
         return this.wardsService.findAll(hospitalId);
     }
 
@@ -89,14 +89,14 @@ export class WardsController {
     @ApiResponse({
         status: 200,
         description: 'Get ward by ID',
-        type: WardDto
+        type: Ward
     })
     @ApiQuery({
         name: 'id',
         required: true,
         type: Number
     })
-    async getWardById(@Query('id') id: number): Promise<WardDto> {
+    async getWardById(@Query('id') id: number): Promise<Ward> {
         return this.wardsService.findWardById(id);
     }
 

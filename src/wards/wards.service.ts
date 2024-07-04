@@ -16,7 +16,7 @@ export class WardsService {
         private treatmentLevelsRepository: Repository<TreatmentLevel>
     ) {}
 
-    async findAll(hospitalId?: number): Promise<WardDto[]> {
+    async findAll(hospitalId?: number): Promise<Ward[]> {
         if (hospitalId) {
             return this.wardsRepository.find({
                 where: { hospital_id: hospitalId }
@@ -36,9 +36,10 @@ export class WardsService {
         return this.wardsRepository.save(ward);
     }
 
-    async findWardById(id: number): Promise<WardDto> {
+    async findWardById(id: number): Promise<Ward> {
         if (process.env.NODE_ENV === 'test') {
             return {
+                id: 1,
                 hospital_id: 1,
                 description: 'Test Ward',
                 treatment_level: 1,
