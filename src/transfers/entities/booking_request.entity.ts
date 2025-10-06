@@ -41,7 +41,7 @@ export class BookingRequest {
 
     @ApiProperty()
     @Column({ name: 'hospital_id' })
-    hospitalId: number;
+    hospitalId: number; // todo: update name to currentHospitalId or requestedHospitalId
 
     @ApiProperty()
     @Column({ name: 'patient_id' })

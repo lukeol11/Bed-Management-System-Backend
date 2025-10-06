@@ -4,7 +4,7 @@
 [![test](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/test.yml/badge.svg)](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/test.yml)
 [![analysis](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/analysis.yml/badge.svg)](https://github.com/lukeol11/Bed-Management-System-Backend/actions/workflows/analysis.yml)
 [![GitHub issues](https://img.shields.io/github/issues/lukeol11/Bed-Management-System-Backend)](https://github.com/lukeol11/Bed-Management-System-Backend/issues)
-![GitHub Created At](https://img.shields.io/github/created-at/lukeol11/Bed-Management-System-Backend?logo=github)
+![GitHub Created At](https://img.shields.io/githubd-at/lukeol11/Bed-Management-System-Backend?logo=github)
 ![GitHub last commit](https://img.shields.io/github/last-commit/lukeol11/Bed-Management-System-Backend?logo=github)
 [![GitHub contributors](https://img.shields.io/github/contributors/lukeol11/Bed-Management-System-Backend.svg?logo=github)](https://github.com/lukeol11/Bed-Management-System-Backend/graphs/contributors/)
 [![GitHub license](https://img.shields.io/github/license/lukeol11/Bed-Management-System-Backend?color=blue&logo=github)](https://github.com/lukeol11/Bed-Management-System-Backend/blob/master/LICENSE)
@@ -89,56 +89,6 @@ The System aims to meet the complex requirements of hospital bed management usin
 - [Unique user roles](#unique-user-roles)
 - [Firebase authentication](#firebase-authentication)
 
-#### Real-time dashboard
-
-![Dashboard](/docs/images/Dashboard.png)
-
-The dashboard provides a real-time overview of the hospital's bed occupancy and navigation to the different features of the system.
-
-#### Bed assignment
-
-![Bed Assignment](/docs/images/Bed%20Assignment.png)
-
-The bed assignment feature allows doctors and nurses to assign a patient to a bed by inputting their details which shows all available beds that meet the patients requirements (Gender & Age).
-
-#### Bed Status Tracking
-
-![Bed Status](/docs/images/Bed%20Status.png)
-
-The bed status page seen in the above figure shows the status of a given bed and the patient information if occupied. The bed status is updated in real-time.
-
-#### Patient Transfers
-
-![Patient Transfer](/docs/images/Patient%20Transfer.png)
-
-The patient transfer screen allows users to request a transfer for a patient to another bed in the same or different hospital. The request can then only be approved by the bed manager where the patient is being transferred to.
-
-#### User Management
-
-![Manage Users](/docs/images/Manage%20Users.png)
-
-The user management page allows administrators to create and delete user accounts. The page also allows administrators to assign roles to users. After entering the details of a new users, a pop-up will appear to enter a password for the new user.
-
-#### Ward & Bed Management
-
-![Manage Wards & Beds](/docs/images/Manage%20Beds.png)
-
-The ward and bed management page allows administrators to create and delete wards and beds.
-
-#### QR code navigation
-
-![QR Code](/docs/images/QR%20code.png)
-
-QR codes similar to the one above are generated for every bed in the hospital. These QR codes can be scanned to navigate to the bed status page for that bed.
-
-#### Bed Cleaning Management
-
-![Cleaning Required Tag](/docs/images/Cleaning%20Required%20Tag.png)
-
-![Mark as Cleaned button](/docs/images/Mark%20as%20cleaned%20button.png)
-
-When a patient is discharged from a bed, the bed is marked as requiring cleaning. Once cleaned the bed can then be marked as available for a new patient.
-
 #### Unique User Roles
 
 | Features                         | Doctors & Nurses | Bed Managers | Administrators |
@@ -152,9 +102,7 @@ When a patient is discharged from a bed, the bed is marked as requiring cleaning
 
 #### Firebase Authentication
 
-![Login Form](/docs/images/Login%20Component.png)
-
-Firebase Authentication is used to authenticate users. The system has three user roles: Doctors & Nurses, Bed Managers, and Administrators. Each user role has different permissions.
+Firebase Authentication is used to authenticate users.
 
 ## Installation
 
@@ -175,15 +123,19 @@ The following MySQL database configuration is required to run the application:
 
 Create a `.env` file in the main directory with the database configuration.
 
-**Sample Configuation:**
+**Sample Configuration:**
 
 ```bash
-DB_HOST = ""
-DB_PORT = 0000
-DB_USERNAME = ""
-DB_PASSWORD = ""
-DB_NAME = ""
-DB_SYNCHRONIZE = ""
+DB_HOST=
+DB_PORT=
+DB_USERNAME=
+DB_PASSWORD=
+DB_NAME=
+DB_SYNCHRONIZE=
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_PRIVATE_KEY=
+FIREBASE_PROJECT_ID=
+REQUIRE_AUTHENTICATION=
 ```
 
 ### Run development build
@@ -218,13 +170,13 @@ For code analysis we use [SonarCloud](https://sonarcloud.io/). Please ensure tha
 
 Commit messages should be in the following format:
 
-```
+```bash
 <type>: <description>
 ```
 
 Branch names should be in the following format:
 
-```
+```bash
 <type>/<description>
 ```
 
@@ -275,86 +227,85 @@ The Vue.js frontend for this project can be found [here](https://github.com/luke
 
 ## Endpoints
 
+### Health Check
+
+| Method                                                                                    | Endpoint               |
+| ----------------------------------------------------------------------------------------- | ---------------------- |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/health         |
+
 ### Users
 
 | Method                                                                                    | Endpoint               |
 | ----------------------------------------------------------------------------------------- | ---------------------- |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/users/all         |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/users/find        |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/users/create      |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/users/delete/{id} |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/users         |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/users      |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/users/{id} |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/users/roles         |
 
 ### Wards
 
 | Method                                                                                    | Endpoint                    |
 | ----------------------------------------------------------------------------------------- | --------------------------- |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/wards/all              |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/wards              |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/wards           |
 | ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/wards/treatment_levels |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/wards/create           |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/wards/find             |
-| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/wards/update/{id}      |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/wards/delete/{id}      |
+| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/wards/{id}      |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/wards/{id}      |
 
 ### Patients
 
 | Method                                                                                    | Endpoint                  |
 | ----------------------------------------------------------------------------------------- | ------------------------- |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/patients/all         |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/patients/find        |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/patients/delete/{id} |
-| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/patients/update/{id} |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/patients/create      |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/patients         |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/patients/{id} |
+| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/patients/{id} |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/patients      |
 
 ### Hospitals
 
 | Method                                                                           | Endpoint            |
 | -------------------------------------------------------------------------------- | ------------------- |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe) | /api/hospitals/all  |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe) | /api/hospitals/find |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe) | /api/hospitals  |
 
 ### Beds
 
 | Method                                                                                    | Endpoint                       |
 | ----------------------------------------------------------------------------------------- | ------------------------------ |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/statuses             |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/all/{ward_id}        |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/find/{bed_id}        |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/find/{bed_id}/active |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/find/{bed_id}/status |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/beds/delete/{bed_id}      |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/occupancy            |
-| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/beds/disable/{bed_id}     |
-| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/beds/enable/{bed_id}      |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/create               |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds/checkout             |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds             |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/beds               |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/beds/{bed_id}      |
+| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/beds/status/{bed_id}     |
 | ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/beds/disabled_reasons     |
+
+### Bed Occupancy
+
+| Method                                                                                    | Endpoint                       |
+| ----------------------------------------------------------------------------------------- | ------------------------------ |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/bed-occupancy             |
+| ![PATCH](https://img.shields.io/badge/PATCH-PATCH?style=for-the-badge&color=%2350e3c2)    | /api/bed-occupancy     |
 
 ### Transfers
 
 | Method                                                                                    | Endpoint                       |
 | ----------------------------------------------------------------------------------------- | ------------------------------ |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/transfers/all             |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/transfers/find/patient_id |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/transfers/find/created_by |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/transfers/create          |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/transfers             |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/transfers          |
 | ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/transfers/approve         |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/transfers/delete/{id}     |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/transfers/{id}     |
 
 ### Routing History
 
 | Method                                                                              | Endpoint                  |
 | ----------------------------------------------------------------------------------- | ------------------------- |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90) | /api/routing-history/add  |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)    | /api/routing-history/find |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)    | /api/routing-history |
 
 ### Rooms
 
 | Method                                                                                    | Endpoint               |
 | ----------------------------------------------------------------------------------------- | ---------------------- |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/rooms/all         |
-| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/rooms/find        |
-| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/rooms/delete/{id} |
-| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/rooms/create      |
+| ![GET](https://img.shields.io/badge/GET-GET?style=for-the-badge&color=%2361affe)          | /api/rooms         |
+| ![DELETE](https://img.shields.io/badge/DELETE-DELETE?style=for-the-badge&color=%23f93e3e) | /api/rooms/{id} |
+| ![POST](https://img.shields.io/badge/POST-POST?style=for-the-badge&color=%2349cc90)       | /api/rooms      |
 
 ## Test
 

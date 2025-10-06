@@ -3,7 +3,7 @@ import { RoutingHistoryService } from './routing-history.service';
 import { RoutingHistoryController } from './routing-history.controller';
 import { RoutingHistory } from './entities/routing-history.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from 'src/config/typeorm.config';
+import { typeOrmConfig } from 'src/database/typeorm.config';
 
 @Module({
     imports: [
@@ -11,7 +11,7 @@ import { typeOrmConfig } from 'src/config/typeorm.config';
         TypeOrmModule.forFeature([RoutingHistory])
     ],
     providers: [RoutingHistoryService],
-    controllers: [RoutingHistoryController]
+    controllers: [RoutingHistoryController],
+    exports: [RoutingHistoryService]
 })
 export class RoutingHistoryModule {}
-

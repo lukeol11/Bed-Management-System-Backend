@@ -27,11 +27,11 @@ scenarios:
     - flow:
           - loop:
                 - get:
-                      url: "/hospitals/all"
+                      url: "/hospitals"
                 - get:
                       url: "/users/find?email=test@test.com"
                 - get:
-                      url: "/wards/all?hospital_id=1"
+                      url: "/wards?hospital_id=1"
                 - get:
                       url: "/beds/find/1/status"
                 - get:
@@ -65,27 +65,27 @@ scenarios:
                 - get:
                       url: "/beds/find/4/status"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
                 - get:
-                      url: "/transfers/all"
+                      url: "/transfers"
             count: 1

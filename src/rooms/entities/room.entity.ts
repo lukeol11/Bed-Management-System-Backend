@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Gender } from 'src/wards/entities/ward.entity';
 
 @Entity('rooms')
 export class Room {
@@ -12,17 +13,17 @@ export class Room {
     description: string;
 
     @ApiProperty()
-    @Column()
-    created_at: Date;
+    @Column({ name: 'created_at' })
+    createdAt: Date;
 
     @ApiProperty()
-    @Column()
-    ward_id: number;
+    @Column({ name: 'ward_id' })
+    wardId: number;
 
-    @ApiProperty({ enum: ['Male', 'Female', 'All'] })
+    @ApiProperty({ enum: Gender })
     @Column({
         type: 'enum',
-        enum: ['Male', 'Female', 'All']
+        enum: [Gender]
     })
-    gender: 'Male' | 'Female' | 'All';
+    gender: Gender;
 }

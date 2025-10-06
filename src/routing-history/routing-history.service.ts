@@ -8,13 +8,11 @@ import { Repository, Between } from 'typeorm';
 export class RoutingHistoryService {
     constructor(
         @InjectRepository(RoutingHistory)
-        private routingHistoryRepository: Repository<RoutingHistory>
+        private readonly routingHistoryRepository: Repository<RoutingHistory>
     ) {}
 
-    async addRoutingHistory(
-        routingHistory: CreateRoutingHistoryDto
-    ): Promise<RoutingHistory> {
-        return this.routingHistoryRepository.save(routingHistory);
+    addRoutingHistory(routingHistory: CreateRoutingHistoryDto) {
+        this.routingHistoryRepository.insert(routingHistory);
     }
 
     async getRoutingHistory(
@@ -25,7 +23,7 @@ export class RoutingHistoryService {
         const results = await this.routingHistoryRepository.find({
             where: {
                 timestamp: Between(startDate, endDate),
-                user_id: userId
+                userId
             }
         });
 

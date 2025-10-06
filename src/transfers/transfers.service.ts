@@ -1,29 +1,53 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOneOptions, IsNull, Not, Repository } from 'typeorm';
 import { BookingRequest } from './entities/booking_request.entity';
 import { BookingRequestDto } from './dto/booking_requests.dto';
 import { BookingApprovedDto } from './dto/booking_approved.dto';
-import { BedsService } from 'src/beds/beds.service';
-import { BedOccupancy } from 'src/beds/entities/bedOccupancy.entity';
+import { BedOccupancy } from 'src/bed-occupancy/entities/bed-occupancy.entity';
+import { BedOccupancyService } from 'src/bed-occupancy/bed-occupancy.service';
+
+export enum RequestType {
+    Approved = 'approved',
+    Pending = 'pending'
+}
 
 @Injectable()
 export class TransfersService {
     constructor(
         @InjectRepository(BookingRequest)
-        private transfersRepository: Repository<BookingRequest>,
-        @Inject(forwardRef(() => BedsService))
-        private readonly bedsService: BedsService
+        private readonly transfersRepository: Repository<BookingRequest>,
+        @Inject(forwardRef(() => BedOccupancyService))
+        private readonly bedOccupancyService: BedOccupancyService
     ) {}
 
-    async findAll(hospitalId?: number): Promise<BookingRequest[]> {
-        if (hospitalId) {
-            return this.transfersRepository.find({
-                where: { hospitalId: hospitalId }
-            });
-        } else {
-            return this.transfersRepository.find();
+    async findRequests(params?: {
+        hospitalId?: number;
+        patientId?: number;
+        createdBy?: number;
+        type?: RequestType;
+    }): Promise<BookingRequest[]> {
+        const where: Record<string, any> = {};
+
+        if (params?.hospitalId) {
+            where.hospitalId = params.hospitalId;
         }
+
+        if (params?.patientId) {
+            where.patientId = params.patientId;
+        }
+
+        if (params?.createdBy) {
+            where.createdBy = params.createdBy;
+        }
+
+        if (params?.type === RequestType.Approved) {
+            where.approvedBy = Not(IsNull());
+        } else if (params?.type === RequestType.Pending) {
+            where.approvedBy = IsNull();
+        }
+
+        return this.transfersRepository.find({ where });
     }
 
     async createTransfer(transfer: BookingRequestDto): Promise<BookingRequest> {
@@ -37,44 +61,6 @@ export class TransfersService {
         return this.transfersRepository.findOne(options);
     }
 
-    async findByPatientId(
-        patientId: number,
-        type: string
-    ): Promise<BookingRequest[]> {
-        if (type === 'approved') {
-            return this.transfersRepository.find({
-                where: { patientId: patientId, approvedBy: Not(IsNull()) }
-            });
-        } else if (type === 'pending') {
-            return this.transfersRepository.find({
-                where: { patientId: patientId, approvedBy: IsNull() }
-            });
-        } else {
-            return this.transfersRepository.find({
-                where: { patientId: patientId }
-            });
-        }
-    }
-
-    async findByCreatedById(
-        created_by: number,
-        type: string
-    ): Promise<BookingRequest[]> {
-        if (type === 'approved') {
-            return this.transfersRepository.find({
-                where: { createdBy: created_by, approvedBy: Not(IsNull()) }
-            });
-        } else if (type === 'pending') {
-            return this.transfersRepository.find({
-                where: { createdBy: created_by, approvedBy: IsNull() }
-            });
-        } else {
-            return this.transfersRepository.find({
-                where: { createdBy: created_by }
-            });
-        }
-    }
-
     async approveTransfer(
         approval: BookingApprovedDto
     ): Promise<BookingRequest> {
@@ -85,37 +71,38 @@ export class TransfersService {
         transfer.approvedAt = approval.approvedAt;
         transfer.bedApproved = approval.bedApproved;
         let updatedTransfer: BookingRequest;
-        try {
-            // mark transfer as approved
-            updatedTransfer = await this.transfersRepository.save(transfer);
-            // checkout the patient from current bed
-            const checkoutResponse: string =
-                await this.bedsService.checkoutBedOccupancy(
-                    {
-                        checkout_time: approval.approvedAt
-                    },
-                    transfer.currentBed,
-                    transfer.patientId
-                );
-            if (checkoutResponse !== 'Checked out successfully') {
-                throw new Error('Error checking out patient');
+
+        // mark transfer as approved
+        updatedTransfer = await this.transfersRepository.save(transfer);
+        // checkout the patient from current bed
+        const occupancy = await this.bedOccupancyService.getBedOccupancy({
+            where: {
+                bedId: transfer.currentBed,
+                patientId: transfer.patientId,
+                checkoutTime: IsNull()
             }
-            // assign the patient to the new bed
-            const createOccupancyResponse: BedOccupancy =
-                await this.bedsService.createBedOccupancy({
-                    bed_id: approval.bedApproved,
-                    patient_id: transfer.patientId,
-                    created_at: approval.approvedAt,
-                    created_by: approval.approvedBy,
-                    time_booked: transfer.approvedAt
-                });
-            if (!createOccupancyResponse?.id) {
-                throw new Error('Error creating bed occupancy');
-            }
-        } catch (err) {
-            console.log(err);
-            throw err;
+        });
+        const checkoutResponse =
+            await this.bedOccupancyService.updateBedOccupancy({
+                id: occupancy[0].id,
+                checkoutTime: approval.approvedAt
+            });
+        if (!checkoutResponse) {
+            throw new Error('Error checking out patient');
         }
+        // assign the patient to the new bed
+        const createOccupancyResponse: BedOccupancy =
+            await this.bedOccupancyService.createBedOccupancy({
+                bedId: approval.bedApproved,
+                patientId: transfer.patientId,
+                createdAt: approval.approvedAt,
+                createdBy: approval.approvedBy,
+                timeBooked: transfer.approvedAt
+            });
+        if (!createOccupancyResponse?.id) {
+            throw new Error('Error creating bed occupancy');
+        }
+
         return updatedTransfer;
     }
 

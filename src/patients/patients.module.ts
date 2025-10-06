@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { PatientsController } from './patients.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from 'src/config/typeorm.config';
+import { typeOrmConfig } from 'src/database/typeorm.config';
 import { Patient } from './entities/patient.entity';
 
 @Module({
@@ -14,3 +14,4 @@ import { Patient } from './entities/patient.entity';
     providers: [PatientsService]
 })
 export class PatientsModule {}
+

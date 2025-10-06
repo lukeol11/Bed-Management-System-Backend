@@ -1,29 +1,20 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Query } from '@nestjs/common';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RoutingHistoryService } from './routing-history.service';
-import { CreateRoutingHistoryDto } from './dto/createRoutingHistory';
 import { RoutingHistory } from './entities/routing-history.entity';
+import { Roles } from 'src/users/roles.decorator';
+import { Role } from 'src/users/enums/role.enum';
 
+@Roles(Role.Admin)
+@ApiBearerAuth()
 @Controller('/api/routing-history')
-@ApiTags('routingHistory')
+@ApiTags('routing-history')
 export class RoutingHistoryController {
     constructor(
         private readonly routingHistoryService: RoutingHistoryService
     ) {}
 
-    @Post('/add')
-    @ApiResponse({
-        status: 200,
-        description: 'Add routing history',
-        type: CreateRoutingHistoryDto
-    })
-    async addRoutingHistory(
-        @Body() routingHistory: CreateRoutingHistoryDto
-    ): Promise<RoutingHistory> {
-        return this.routingHistoryService.addRoutingHistory(routingHistory);
-    }
-
-    @Get('/find')
+    @Get()
     @ApiResponse({
         status: 200,
         description: 'Get routing history',

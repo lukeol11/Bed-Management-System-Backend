@@ -26,7 +26,7 @@ CREATE TABLE
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`),
         CONSTRAINT `fk_beds_rooms_id` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`),
-        CONSTRAINT `fk_beds_disabled_reasons_id` FOREIGN KEY (`disabled_reasons_id`) REFERENCES `disabled_reasons` (`id`),
+        CONSTRAINT `fk_beds_disabled_reasons_id` FOREIGN KEY (`disabled_reason_id`) REFERENCES `disabled_reasons` (`id`),
         CONSTRAINT `fk_beds_wards_id` FOREIGN KEY (`ward_id`) REFERENCES `wards` (`id`)
     );
 
@@ -84,20 +84,18 @@ CREATE TABLE
         PRIMARY KEY (`id`)
     );
 
-CREATE TABLE
-    `users` (
-        `id` int NOT NULL AUTO_INCREMENT,
-        `first_name` varchar(255) NOT NULL,
-        `last_name` varchar(255) NOT NULL,
-        `can_approve_requests` tinyint NOT NULL,
-        `hospital_id` int NOT NULL,
-        `email` varchar(255) NOT NULL,
-        `phone_number` varchar(255) NOT NULL,
-        `created_by` int NOT NULL,
-        `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        `can_administrate` tinyint NOT NULL,
-        PRIMARY KEY (`id`)
-    );
+CREATE TABLE `users` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `first_name` varchar(255) NOT NULL,
+    `last_name` varchar(255) NOT NULL,
+    `hospital_id` int NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `phone_number` varchar(255) NOT NULL,
+    `created_by` int NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `roles` varchar(255) NOT NULL DEFAULT 'user',
+    PRIMARY KEY (`id`)
+);
 
 CREATE TABLE
     `wards` (
@@ -119,8 +117,8 @@ CREATE TABLE
 CREATE TABLE
     `routing_history` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `from` varchar(255) NOT NULL,
-        `to` varchar(255) NOT NULL,
+        `method` varchar(255) NOT NULL,
+        `request` varchar(255) NOT NULL,
         `user_id` int NOT NULL,
         `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
@@ -130,7 +128,7 @@ CREATE TABLE
     `rooms` (
         `id` int NOT NULL AUTO_INCREMENT,
         `description` varchar(255) NOT NULL,
-        'ward_id' int NOT NULL,
+        `ward_id` int NOT NULL,
         `gender` enum ('Male', 'Female', 'All') NOT NULL,
         `created_at` datetime NOT NULL,
         PRIMARY KEY (`id`)
