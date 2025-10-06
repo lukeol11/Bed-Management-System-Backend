@@ -41,9 +41,8 @@ export class WardQueryParamsDto {
     gender?: Gender;
 
     @ApiProperty({
-        required: true
+        required: false
     })
-    @IsNotEmpty()
     @IsInt()
-    hospitalId: number;
+    hospitalId?: number;
 }
