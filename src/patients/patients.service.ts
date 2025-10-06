@@ -1,45 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { Patient } from './entities/patient.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Repository } from 'typeorm';
-import { PatientDto } from './dto/patient.dto';
+import { FindManyOptions, Repository } from 'typeorm';
+import { CreatePatientDto } from './dto/create-patient.dto';
+import { UpdatePatientDto } from './dto/update-patient.dto';
 
 @Injectable()
 export class PatientsService {
     constructor(
         @InjectRepository(Patient)
-        private patientsRepository: Repository<Patient>
+        private readonly patientsRepository: Repository<Patient>
     ) {}
 
-    async findAll(): Promise<PatientDto[]> {
-        return this.patientsRepository.find();
+    async find(params?: FindManyOptions<Patient>): Promise<Patient[]> {
+        return this.patientsRepository.find(params);
     }
 
-    async deletePatient(id: number): Promise<string> {
+    async deletePatient(id: number) {
         await this.patientsRepository.delete(id);
-        return 'Patient deleted';
     }
 
-    async updatePatient(id: number, patient: PatientDto): Promise<PatientDto> {
-        const currentPatient = await this.findPatientById(id);
-        if (!currentPatient) {
-            throw new Error('Patient not found');
-        }
-
-        await this.patientsRepository.update(id, patient);
-
-        return this.findPatientById(id);
-    }
-
-    async findPatientById(id: number): Promise<PatientDto> {
-        const options: FindOneOptions<Patient> = {
-            where: { id: id }
+    async updatePatient(
+        id: number,
+        patient: UpdatePatientDto
+    ): Promise<Patient> {
+        const patientQuery = {
+            id,
+            ...patient
         };
-        return this.patientsRepository.findOne(options);
+        return this.patientsRepository.save(patientQuery);
     }
 
-    async createPatient(patient: PatientDto): Promise<Patient> {
+    async createPatient(patient: CreatePatientDto): Promise<Patient> {
         return this.patientsRepository.save(patient);
     }
 }
-

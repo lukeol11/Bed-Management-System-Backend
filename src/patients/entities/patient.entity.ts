@@ -1,3 +1,4 @@
+import { IsDateString } from 'class-validator';
 import {
     Entity,
     Column,
@@ -5,36 +6,42 @@ import {
     CreateDateColumn
 } from 'typeorm';
 
+export enum PatientGender {
+    OTHER = 'Other',
+    MALE = 'Male',
+    FEMALE = 'Female'
+}
+
 @Entity('patients')
 export class Patient {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    first_name: string;
+    @Column({ name: 'first_name' })
+    firstName: string;
 
-    @Column()
-    last_name: string;
+    @Column({ name: 'last_name' })
+    lastName: string;
 
-    @Column()
-    date_of_birth: string;
+    @Column({ name: 'date_of_birth' })
+    @IsDateString()
+    dateOfBirth: string;
 
-    @Column()
-    in_transit: boolean;
+    @Column({ name: 'in_transit' })
+    inTransit: boolean;
 
-    @Column()
-    created_by: number;
+    @Column({ name: 'created_by' })
+    createdBy: number;
 
     @Column({
         type: 'enum',
-        enum: ['Male', 'Female', 'Other']
+        enum: PatientGender
     })
-    gender: 'Male' | 'Female' | 'Other';
+    gender: PatientGender;
 
-    @CreateDateColumn()
-    created_at: Date;
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: Date;
 
-    @Column()
-    treatment_level_id: number;
+    @Column({ name: 'treatment_level_id' })
+    treatmentLevelId: number;
 }
-

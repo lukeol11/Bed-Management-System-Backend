@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Room } from 'src/rooms/entities/room.entity';
-import { DisabledReason } from './disabledReasons.entity';
+import { DisabledReason } from './disabled-reasons.entity';
 import {
     Entity,
     Column,
@@ -20,12 +20,12 @@ export class Bed {
     description: string;
 
     @ApiProperty()
-    @Column()
-    ward_id: number;
+    @Column({ name: 'ward_id' })
+    wardId: number;
 
     @ApiProperty()
-    @Column({ nullable: true })
-    room_id: number;
+    @Column({ name: 'room_id', nullable: true })
+    roomId: number;
 
     @ApiProperty()
     @ManyToOne(() => Room)
@@ -37,19 +37,19 @@ export class Bed {
     disabled: boolean;
 
     @ApiProperty()
-    @Column()
-    updated_at: Date;
+    @Column({ name: 'updated_at' })
+    updatedAt: Date;
 
     @ApiProperty()
-    @Column()
-    created_at: Date;
+    @Column({ name: 'created_at' })
+    createdAt: Date;
 
     @ApiProperty()
-    @Column({ nullable: true })
-    disabled_reason_id: number;
+    @Column({ name: 'disabled_reason_id', nullable: true })
+    disabledReasonId: number;
 
     @ApiProperty()
     @ManyToOne(() => DisabledReason)
     @JoinColumn({ name: 'disabled_reason_id' })
-    disabled_reason: DisabledReason;
+    disabledReason: DisabledReason;
 }

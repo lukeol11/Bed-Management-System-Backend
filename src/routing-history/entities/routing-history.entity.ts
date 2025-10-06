@@ -14,15 +14,15 @@ export class RoutingHistory {
 
     @ApiProperty()
     @Column()
-    from: string;
+    method: string;
 
     @ApiProperty()
     @Column()
-    to: string;
+    request: string;
 
     @ApiProperty()
-    @Column()
-    user_id: number;
+    @Column({ name: 'user_id' })
+    userId: number;
 
     @ApiProperty()
     @CreateDateColumn()

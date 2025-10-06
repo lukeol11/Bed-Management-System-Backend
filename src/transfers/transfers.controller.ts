@@ -3,99 +3,69 @@ import {
     Controller,
     Delete,
     Get,
-    Headers,
-    HttpException,
-    HttpStatus,
     Param,
     Post,
     Query
 } from '@nestjs/common';
-import { TransfersService } from './transfers.service';
-import { UsersService } from 'src/users/users.service';
+import { RequestType, TransfersService } from './transfers.service';
 import { BookingRequest } from './entities/booking_request.entity';
 import { BookingRequestDto } from './dto/booking_requests.dto';
 import { BookingApprovedDto } from './dto/booking_approved.dto';
-import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiBody,
+    ApiOperation,
+    ApiQuery,
+    ApiResponse,
+    ApiTags
+} from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
+import { Roles } from 'src/users/roles.decorator';
+import { Role } from 'src/users/enums/role.enum';
 dotenv.config();
 
+@Roles(Role.User)
+@ApiBearerAuth()
 @Controller('/api/transfers')
 @ApiTags('transfers')
 export class TransfersController {
-    constructor(
-        private readonly transfersService: TransfersService,
-        private readonly usersService: UsersService
-    ) {}
+    constructor(private readonly transfersService: TransfersService) {}
 
-    @Get('/all')
+    @Get()
     @ApiResponse({
         status: 200,
-        description: 'Get all transfers or filter by hospital ID',
+        description:
+            'Get transfers with optional filters: hospital_id, patient_id, user_id, type',
         type: BookingRequest,
         isArray: true
     })
-    @ApiQuery({
-        name: 'hospital_id',
-        required: false,
-        type: Number
-    })
-    async getAllTransfers(
-        @Query('hospital_id') hospitalId?: number
-    ): Promise<BookingRequest[]> {
-        return this.transfersService.findAll(hospitalId);
-    }
-
-    @Get('/find/patient_id/')
-    @ApiResponse({
-        status: 200,
-        description: 'Get a transfer by Patient ID',
-        type: BookingRequest,
-        isArray: true
-    })
-    @ApiQuery({
-        name: 'patient_id',
-        required: true,
-        type: Number
-    })
+    @ApiQuery({ name: 'hospital_id', required: false, type: Number })
+    @ApiQuery({ name: 'patient_id', required: false, type: Number })
+    @ApiQuery({ name: 'user_id', required: false, type: Number })
     @ApiQuery({
         name: 'type',
         required: false,
         type: String,
         enum: ['approved', 'pending']
     })
-    async getTransferByPatientId(
-        @Query('patient_id') patientId: number,
-        @Query('type') type?: string
+    async getTransfers(
+        @Query('hospital_id') hospitalId?: number,
+        @Query('patient_id') patientId?: number,
+        @Query('user_id') createdBy?: number,
+        @Query('type') type?: RequestType
     ): Promise<BookingRequest[]> {
-        return this.transfersService.findByPatientId(patientId, type);
+        return this.transfersService.findRequests({
+            hospitalId,
+            patientId,
+            createdBy,
+            type
+        });
     }
 
-    @Get('/find/created_by/')
-    @ApiResponse({
-        status: 200,
-        description: 'Get a transfer by Created By ID',
-        type: BookingRequest,
-        isArray: true
+    @Post()
+    @ApiOperation({
+        summary: 'Create a new transfer request'
     })
-    @ApiQuery({
-        name: 'user_id',
-        required: true,
-        type: Number
-    })
-    @ApiQuery({
-        name: 'type',
-        required: false,
-        type: String,
-        enum: ['approved', 'pending']
-    })
-    async getTransferByCreatedById(
-        @Query('user_id') userId: number,
-        @Query('type') type?: string
-    ): Promise<BookingRequest[]> {
-        return this.transfersService.findByCreatedById(userId, type);
-    }
-
-    @Post('/create')
     @ApiResponse({
         status: 201,
         description: 'Create a new transfer',
@@ -111,60 +81,31 @@ export class TransfersController {
     }
 
     @Post('/approve')
+    @ApiOperation({
+        summary: 'Approve a transfer request',
+        description:
+            'This endpoint approves the transfer request and updates the bed occupancy for the current and new beds.'
+    })
     @ApiResponse({
         status: 200,
         description: 'Approve a transfer',
         type: BookingRequest
     })
+    @Roles(Role.BedManager)
     async approveTransfer(
-        @Body() approval: BookingApprovedDto,
-        @Headers('email') email?: string
+        @Body() approval: BookingApprovedDto
     ): Promise<BookingRequest> {
-        const requestingUser = await this.usersService.findByEmail(email);
-        const bookingRequest = await this.transfersService.findById(
-            approval.id
-        );
-
-        if (
-            (requestingUser?.can_approve_requests &&
-                bookingRequest.hospitalId === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development' ||
-            process.env.NODE_ENV === 'test'
-        ) {
-            return this.transfersService.approveTransfer(approval);
-        } else {
-            throw new HttpException(
-                'Unauthorized access',
-                HttpStatus.UNAUTHORIZED
-            );
-        }
+        return this.transfersService.approveTransfer(approval);
     }
 
-    @Delete('/delete/:id')
+    @Delete(':id')
     @ApiResponse({
         status: 200,
         description: 'Delete a transfer by ID',
         type: BookingRequest
     })
-    async deleteTransfer(
-        @Param('id') id: number,
-        @Headers('email') email?: string
-    ): Promise<string> {
-        const requestingUser = await this.usersService.findByEmail(email);
-        const bookingRequest = await this.transfersService.findById(id);
-
-        if (
-            (requestingUser?.can_approve_requests &&
-                bookingRequest.hospitalId === requestingUser.hospital_id) ||
-            process.env.NODE_ENV === 'development' ||
-            process.env.NODE_ENV === 'test'
-        ) {
-            return this.transfersService.delete(id);
-        } else {
-            throw new HttpException(
-                'Unauthorized access',
-                HttpStatus.UNAUTHORIZED
-            );
-        }
+    @Roles(Role.BedManager)
+    async deleteTransfer(@Param('id') id: number): Promise<string> {
+        return this.transfersService.delete(id);
     }
 }

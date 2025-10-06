@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { HealthController } from './health.controller';
 import { UsersModule } from './users/users.module';
 import { WardsModule } from './wards/wards.module';
 import { PatientsModule } from './patients/patients.module';
@@ -11,6 +10,9 @@ import { RoutingHistoryModule } from './routing-history/routing-history.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { RoomsModule } from './rooms/rooms.module';
+import { AuthModule } from './auth/auth.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { FirebaseHealthIndicator } from './auth/firebase.health';
 
 @Module({
     imports: [
@@ -27,11 +29,13 @@ import { RoomsModule } from './rooms/rooms.module';
         BedsModule,
         TransfersModule,
         RoutingHistoryModule,
-        RoomsModule
+        RoomsModule,
+        AuthModule,
+        TerminusModule
     ],
-    controllers: [AppController],
+    controllers: [HealthController],
     providers: [
-        AppService,
+        FirebaseHealthIndicator,
         {
             provide: APP_GUARD,
             useClass: ThrottlerGuard
