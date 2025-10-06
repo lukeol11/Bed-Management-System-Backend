@@ -59,7 +59,7 @@ export class PatientsController {
             options.where['treatmentLevelId'] = params.treatmentLevelId;
         }
 
-        return this.patientsService.find();
+        return this.patientsService.find(options);
     }
 
     @Delete(':id')
