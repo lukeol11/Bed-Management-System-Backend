@@ -33,8 +33,7 @@ export class WardsService {
         const options: FindOneOptions<Ward> = {
             where: { id: id }
         };
-        const wards = await this.findAll(options);
-        return wards?.[0] || null;
+        return await this.wardsRepository.findOne(options);
     }
 
     async updateWard(id: number, ward: UpdateWardDto): Promise<Ward> {
